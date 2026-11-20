@@ -13,6 +13,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/img/icon.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/img/icon.png">
 <link rel="manifest" href="/site.webmanifest">
+<link rel="preload" as="image" href="/img/icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="ZetaSing">
@@ -57,7 +58,7 @@ img{display:block;max-width:100%}
 /* nav */
 .nav{position:sticky;top:0;z-index:80;display:flex;align-items:center;gap:14px;padding:12px 20px;background:rgba(255,248,241,.9);backdrop-filter:blur(16px) saturate(150%);border-bottom:1px solid var(--line)}
 .brand{display:flex;align-items:center;gap:10px;flex:none}
-.sigil{width:28px;height:28px;flex:none;filter:drop-shadow(0 3px 8px rgba(239,77,63,.35))}
+.sigil{width:28px;height:28px;flex:none;border-radius:8px;filter:drop-shadow(0 3px 8px rgba(239,77,63,.35))}
 .brand b{font-family:var(--d);font-weight:900;font-size:24px;color:var(--ink);line-height:1;letter-spacing:-.5px}
 .links{display:flex;gap:16px;overflow-x:auto;scrollbar-width:none;font-family:var(--h);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-left:auto}
 .links::-webkit-scrollbar{display:none}
@@ -176,9 +177,6 @@ section.blk{padding:56px 0 6px}
 .install{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;font-family:var(--h);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:10px;color:#fff;background:linear-gradient(135deg,var(--acc),var(--deep));border:0;border-radius:10px;transition:.25s}
 .install:hover{background:linear-gradient(135deg,#ff6252,#a8231c)}
 .install svg{width:12px;height:12px}
-.copy{width:38px;flex:none;display:grid;place-items:center;cursor:pointer;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:10px;transition:.25s}
-.copy:hover{color:var(--deep);border-color:#f6b7a3;background:#fff1e8}
-.copy svg{width:13px;height:13px}
 .empty{grid-column:1/-1;text-align:center;padding:42px;color:var(--muted);font-style:italic;border:2px dashed var(--line);border-radius:var(--r)}
 
 /* panel */
@@ -236,7 +234,7 @@ footer{margin-top:64px;padding:44px 20px 34px;border-top:1px solid var(--line);b
 .sheet p{font-size:15px;color:var(--muted);margin-bottom:9px}
 .sheet ol{margin:0 0 14px 18px;color:var(--muted);font-size:15px}
 .sheet ol li{margin-bottom:6px}
-.mono{font-family:ui-monospace,monospace;font-size:10.5px;color:var(--deep);word-break:break-all;background:#fff5ef;border:1px solid var(--line);border-radius:10px;padding:9px;margin-bottom:13px;max-height:100px;overflow:auto}
+.mono{font-family:ui-monospace,monospace;font-size:10.5px;color:var(--deep);word-break:break-all;background:#fff5ef;border:1px solid var(--line);border-radius:10px;padding:9px;margin-bottom:13px;max-height:100px;overflow:auto;-webkit-user-select:all;user-select:all}
 .close{position:absolute;top:12px;right:12px;width:28px;height:28px;display:grid;place-items:center;background:#fff;border:1px solid var(--line);border-radius:50%;color:var(--muted);cursor:pointer}
 .close:hover{color:var(--deep);border-color:#f6b7a3}
 .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,90px);z-index:1100;background:var(--ink);color:#fff;padding:11px 20px;border-radius:999px;font-family:var(--h);font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;opacity:0;transition:.35s var(--e);pointer-events:none;box-shadow:0 16px 34px -16px rgba(0,0,0,.7)}
@@ -253,7 +251,7 @@ footer{margin-top:64px;padding:44px 20px 34px;border-top:1px solid var(--line);b
 <div class="ticker"><span><b>ZetaSing</b> &nbsp;·&nbsp; Certificados de empresa vigentes &nbsp;·&nbsp; Instalación OTA directa &nbsp;·&nbsp; Perfil DNS propio &nbsp;·&nbsp; ESign &amp; KSign &nbsp;·&nbsp; Sin PC &nbsp;·&nbsp; <b>El sello está abierto</b> &nbsp;·&nbsp; Certificados de empresa vigentes &nbsp;·&nbsp; Instalación OTA directa &nbsp;·&nbsp;</span></div>
 
 <nav class="nav">
-  <a class="brand" href="#/" data-nav="home"><img class="sigil" src="/img/icon.png" alt="ZetaSing"><b>ZetaSing</b></a>
+  <a class="brand" href="#/" data-nav="home"><img class="sigil" src="/img/icon.png" alt="ZetaSing" width="28" height="28" fetchpriority="high" decoding="async"><b>ZetaSing</b></a>
   <div class="links">
     <a href="#/" data-nav="home">Inicio</a>
     <a href="#/esign" data-nav="esign">ESign</a>
@@ -302,9 +300,9 @@ footer{margin-top:64px;padding:44px 20px 34px;border-top:1px solid var(--line);b
       <section class="blk">
         <div class="head"><h2><small>Tres puertas</small>Elige tu camino</h2><p>Todo el ritual empieza por el perfil DNS. Después, escoge el firmador.</p></div>
         <div class="tiles">
-          <a class="tile" href="#/esign"><img class="emb" src="/img/esign.png" alt="Logo de ESign" loading="lazy"><h3>ESign</h3><p>18 sellos con instalación directa desde el servidor oficial.</p><span class="go">Abrir catálogo</span></a>
-          <a class="tile" href="#/ksign"><img class="emb" src="/img/ksign.png" alt="Logo de KSign" loading="lazy"><h3>KSign</h3><p>18 sellos con el mismo flujo directo y perfiles renovados.</p><span class="go">Abrir catálogo</span></a>
-          <a class="tile dns-t" href="#/dns"><img class="emb" src="/img/icon.png" alt="Perfil DNS" loading="lazy"><h3>Perfil DNS</h3><p>Configura el DNS y te deja ZetaSing en la pantalla de inicio.</p><span class="go">Instalar ahora</span></a>
+          <a class="tile" href="#/esign"><img class="emb" src="/img/esign.png" alt="Logo de ESign" width="88" height="88" fetchpriority="high" decoding="async"><h3>ESign</h3><p>18 sellos con instalación directa desde el servidor oficial.</p><span class="go">Abrir catálogo</span></a>
+          <a class="tile" href="#/ksign"><img class="emb" src="/img/ksign.png" alt="Logo de KSign" width="88" height="88" fetchpriority="high" decoding="async"><h3>KSign</h3><p>18 sellos con el mismo flujo directo y perfiles renovados.</p><span class="go">Abrir catálogo</span></a>
+          <a class="tile dns-t" href="#/dns"><img class="emb" src="/img/icon.png" alt="Perfil DNS" width="88" height="88" decoding="async"><h3>Perfil DNS</h3><p>Configura el DNS y te deja ZetaSing en la pantalla de inicio.</p><span class="go">Instalar ahora</span></a>
         </div>
         <div class="note"><p><b>Antes de nada:</b> abre ZetaSing en <b>Safari</b> desde el iPhone. Desde Instagram, TikTok o Chrome los enlaces de instalación no se disparan.</p></div>
       </section>
@@ -324,12 +322,11 @@ footer{margin-top:64px;padding:44px 20px 34px;border-top:1px solid var(--line);b
 
   <div class="view" data-view="esign">
     <header class="phead">
-      <img class="emb" src="/img/esign.png" alt="Logo de ESign">
+      <img class="emb" src="/img/esign.png" alt="Logo de ESign" width="104" height="104" fetchpriority="high" decoding="async">
       <div class="k"><span class="eyebrow">Firmador · OTA</span><h1>ESign</h1>
       <p>18 certificados de empresa servidos directamente desde el servidor oficial. Si un sello falla o se revoca, baja y prueba el siguiente.</p>
       <div class="cta">
         <a class="btn" href="https://github.com/khoindvn/khoindvn.github.io/releases/download/ipa/ESign.ipa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 20h16"/></svg><span>Descargar .ipa directo</span></a>
-        <button class="btn" data-copyipa="https://github.com/khoindvn/khoindvn.github.io/releases/download/ipa/ESign.ipa"><span>Copiar enlace .ipa</span></button>
       </div></div>
     </header>
     <div class="warn"><div class="warn-box" id="warnBox"><p id="warnTxt">Estás fuera de Safari en iPhone. Los enlaces OTA <b>solo se lanzan desde Safari</b>.</p><button class="warn-x" id="warnX" aria-label="Cerrar">&times;</button></div></div>
@@ -342,12 +339,11 @@ footer{margin-top:64px;padding:44px 20px 34px;border-top:1px solid var(--line);b
 
   <div class="view" data-view="ksign">
     <header class="phead">
-      <img class="emb" src="/img/ksign.png" alt="Logo de KSign">
+      <img class="emb" src="/img/ksign.png" alt="Logo de KSign" width="104" height="104" fetchpriority="high" decoding="async">
       <div class="k"><span class="eyebrow">Firmador · OTA</span><h1>KSign</h1>
       <p>18 certificados de empresa servidos directamente desde el servidor oficial. Alternativa estable: si un sello se revoca, cambia al siguiente.</p>
       <div class="cta">
         <a class="btn" href="https://github.com/khoindvn/khoindvn.github.io/releases/download/ipa/KSign.ipa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 20h16"/></svg><span>Descargar .ipa directo</span></a>
-        <button class="btn" data-copyipa="https://github.com/khoindvn/khoindvn.github.io/releases/download/ipa/KSign.ipa"><span>Copiar enlace .ipa</span></button>
       </div></div>
     </header>
     <div class="warn"><div class="warn-box" id="warnBoxK"><p id="warnTxtK">Estás fuera de Safari en iPhone. Los enlaces OTA <b>solo se lanzan desde Safari</b>.</p><button class="warn-x" id="warnXK" aria-label="Cerrar">&times;</button></div></div>
@@ -369,7 +365,6 @@ footer{margin-top:64px;padding:44px 20px 34px;border-top:1px solid var(--line);b
         <p>Se genera un archivo <code>.mobileconfig</code> firmado con el nombre de ZetaSing. Contiene el ajuste de DNS y el acceso directo con icono. Tras descargarlo, iOS te pedirá confirmación en Ajustes.</p>
         <div class="acts">
           <button class="btn solid" id="dlProfile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0 0 5-5m-5 5-5-5M4 21h16"/></svg><span>Descargar perfil</span></button>
-          <button class="btn" id="cpProfile"><span>Copiar enlace de la web</span></button>
         </div>
       </div>
       <div class="head" style="margin-top:40px"><h2><small>Instalación</small>Qué hacer tras descargarlo</h2></div>
@@ -432,7 +427,7 @@ footer{margin-top:64px;padding:44px 20px 34px;border-top:1px solid var(--line);b
 
       <div class="head" style="margin-top:40px"><h2><small>Consultas al sello</small>Preguntas frecuentes</h2></div>
       <div class="faq">
-        <details><summary>No pasa nada al pulsar «Instalar»</summary><p>Casi siempre es una de dos: no estás en Safari, o falta el perfil DNS. Usa el botón de copiar de la tarjeta y pega el enlace en la barra de direcciones de Safari.</p></details>
+        <details><summary>No pasa nada al pulsar «Instalar»</summary><p>Casi siempre es una de dos: no estás en Safari, o falta el perfil DNS. Abre la página desde Safari y vuelve a intentarlo.</p></details>
         <details><summary>Sale «No se puede conectar con el servidor»</summary><p>Falta el DNS o el servidor OTA está saturado. Instala el perfil, reinicia y prueba otro certificado.</p></details>
         <details><summary>«No se puede verificar la app» al abrirla</summary><p>Falta el paso de confiar: <code>Ajustes → General → VPN y gestión de dispositivos → Confiar</code>.</p></details>
         <details><summary>¿El certificado es permanente?</summary><p>No. Las cuentas de empresa se revocan sin aviso cuando Apple las cierra. Cuando pase, cambia de sello y vuelve a firmar.</p></details>
@@ -454,9 +449,9 @@ footer{margin-top:64px;padding:44px 20px 34px;border-top:1px solid var(--line);b
     <button class="close" id="mClose" aria-label="Cerrar">&times;</button>
     <h3 id="mTitle">Instalación manual</h3>
     <p>La instalación no se ha lanzado desde este navegador. Hazlo así:</p>
-    <ol><li>Abre esta página en <b>Safari</b> del iPhone.</li><li>Copia el enlace de abajo.</li><li>Pégalo en la barra de direcciones y pulsa «Ir».</li><li>Confirma la instalación.</li></ol>
+    <ol><li>Abre esta página en <b>Safari</b> del iPhone.</li><li>Mantén pulsado el enlace de abajo y elige «Copiar».</li><li>Pégalo en la barra de direcciones y pulsa «Ir».</li><li>Confirma la instalación.</li></ol>
     <div class="mono" id="mUrl"></div>
-    <div class="row"><button class="install" id="mCopy">Copiar enlace</button><a class="install" id="mGo" href="#" style="max-width:110px">Abrir igual</a></div>
+    <a class="install" id="mGo" href="#">Abrir igual</a>
   </div>
 </div>
 <div class="toast" id="toast">Copiado</div>
@@ -579,17 +574,15 @@ function copy(v,msg){const d=()=>toast(msg||'Copiado');
  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(v).then(d).catch(fb)}else fb();
  function fb(){const a=document.createElement('textarea');a.value=v;a.style.position='fixed';a.style.opacity=0;document.body.appendChild(a);a.select();try{document.execCommand('copy');d()}catch(e){toast('Copia manual')}a.remove()}}
 const IC_DL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 20h16"/></svg>';
-const IC_CP='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>';
 
 function card(d,img){
   return `<article class="card" data-k="${(d.n+' '+d.s).toLowerCase()}">
-  <div class="thumb"><img class="emb" src="/img/${img}" alt="${d.n}" loading="lazy">${d.t?`<span class="badge new">${d.t}</span>`:''}</div>
+  <div class="thumb"><img class="emb" src="/img/${img}" alt="${d.n}" width="64" height="64" loading="lazy" decoding="async">${d.t?`<span class="badge new">${d.t}</span>`:''}</div>
   <div class="body"><b>${d.n}</b><span>${d.s}</span>
-  <div class="row"><button class="install" data-url="${d.u}">${IC_DL}Instalar</button>
-  <button class="copy" data-url="${d.u}" aria-label="Copiar">${IC_CP}</button></div></div></article>`;
+  <div class="row"><button class="install" data-url="${d.u}">${IC_DL}Instalar</button></div></div></article>`;
 }
 $('#gridE').innerHTML=ESIGN.map(d=>card(d,'esign.png')).join('');
-$('#gridK').innerHTML=KSIGN.map(d=>card(d,'ksign.png')).join('');
+$('#gridK').innerHTML=KSIGN.map(d=>card(d, 'ksign.png')).join('');
 $('#nE').textContent=ESIGN.length; $('#nK').textContent=KSIGN.length;
 $('#rows').innerHTML=CERTS.map(c=>`<div class="rowitem">
  <div class="n"><b>${c.name}</b><span>${c.note} · .zip</span></div>
@@ -672,19 +665,16 @@ $('#dlProfile').addEventListener('click', async () => {
   setTimeout(()=>URL.revokeObjectURL(a.href), 8000);
   toast('Perfil generado');
 });
-$('#cpProfile').onclick=()=>copy(location.href.split('#')[0],'Enlace copiado');
 
 /* ================= MODAL / INSTALAR ================= */
 const modal=$('#modal');
-function open(u){$('#mUrl').textContent=u;$('#mGo').href=u;$('#mCopy').onclick=()=>copy(u);modal.classList.add('on')}
+function open(u){$('#mUrl').textContent=u;$('#mGo').href=u;modal.classList.add('on')}
 $('#mClose').onclick=()=>modal.classList.remove('on');
 modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('on')});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('on')});
 
 document.addEventListener('click',e=>{
-  const c=e.target.closest('.copy[data-url]'); if(c){copy(c.dataset.url,'Enlace copiado');return}
   const p=e.target.closest('.pw[data-pw]'); if(p){copy(p.dataset.pw,'Contraseña copiada');return}
-  const ipa=e.target.closest('[data-copyipa]'); if(ipa){copy(ipa.dataset.copyipa,'Enlace .ipa copiado');return}
   const i=e.target.closest('.install[data-url]'); if(!i)return;
   if(isSafari){window.location.href=i.dataset.url;return}
   e.preventDefault(); open(i.dataset.url);
@@ -692,7 +682,7 @@ document.addEventListener('click',e=>{
 
 if(!isSafari){
   ['#warnBox','#warnBoxK'].forEach(id=>{const el=$(id); if(el) el.classList.add('show')});
-  if(isIOS){$('#warnTxt').innerHTML='Estás en un navegador que no es Safari. Copia el enlace y pégalo en <b>Safari</b> para instalar.';$('#warnTxtK').innerHTML=$('#warnTxt').innerHTML}
+  if(isIOS){$('#warnTxt').innerHTML='Estás en un navegador que no es Safari. Abre la página en <b>Safari</b> para instalar.';$('#warnTxtK').innerHTML=$('#warnTxt').innerHTML}
 }
 $('#warnX').onclick=()=>$('#warnBox').classList.remove('show');
 $('#warnXK').onclick=()=>$('#warnBoxK').classList.remove('show');
