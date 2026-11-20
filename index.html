@@ -1,12 +1,20 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ZetaSing</title>
-<meta name="description" content="ZetaSing: instalación OTA de ESign y KSign con certificados de empresa para iPhone. Sin PC.">
+<meta name="description" content="ZetaSing: OTA install of ESign and KSign with company certificates for iPhone. No PC.">
 <meta name="theme-color" content="#fff8f1">
-<meta name="color-scheme" content="light">
+<script>
+(function(){try{
+  var t=localStorage.getItem('zs.theme')||'light';
+  var l=localStorage.getItem('zs.lang')||'en';
+  document.documentElement.dataset.theme=t;
+  document.documentElement.lang=l;
+  document.documentElement.style.colorScheme=t==='dark'?'dark':'light';
+}catch(e){}})();
+</script>
 
 <!-- ====== ICONOS ====== -->
 <link rel="icon" type="image/png" sizes="32x32" href="/img/icon.png">
@@ -23,14 +31,14 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ZetaSing">
 <meta property="og:title" content="ZetaSing">
-<meta property="og:description" content="Instala ESign y KSign en tu iPhone con certificados de empresa. Perfil DNS propio, sin PC.">
+<meta property="og:description" content="Install ESign and KSign on your iPhone with company certificates. Own DNS profile, no PC.">
 <meta property="og:image" content="https://zetasing.vercel.app/img/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://zetasing.vercel.app/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ZetaSing">
-<meta name="twitter:description" content="Instala ESign y KSign en tu iPhone con certificados de empresa.">
+<meta name="twitter:description" content="Install ESign and KSign on your iPhone with company certificates.">
 <meta name="twitter:image" content="https://zetasing.vercel.app/img/og.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,7 +51,7 @@
 --e:cubic-bezier(.22,.8,.24,1);--r:18px}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{background:var(--bg);color:var(--body);font-family:var(--f);font-size:17px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--body);font-family:var(--f);font-size:17px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
 ::selection{background:var(--acc);color:#fff}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
@@ -56,7 +64,7 @@ img{display:block;max-width:100%}
 .ticker b{color:#ffe2b8}
 
 /* nav */
-.nav{position:sticky;top:0;z-index:80;display:flex;align-items:center;gap:14px;padding:12px 20px;background:rgba(255,248,241,.9);backdrop-filter:blur(16px) saturate(150%);border-bottom:1px solid var(--line)}
+.nav{position:sticky;top:0;z-index:80;display:flex;align-items:center;gap:12px;padding:12px 20px;background:rgba(255,248,241,.9);backdrop-filter:blur(16px) saturate(150%);border-bottom:1px solid var(--line)}
 .brand{display:flex;align-items:center;gap:10px;flex:none}
 .sigil{width:28px;height:28px;flex:none;border-radius:8px;filter:drop-shadow(0 3px 8px rgba(239,77,63,.35))}
 .brand b{font-family:var(--d);font-weight:900;font-size:24px;color:var(--ink);line-height:1;letter-spacing:-.5px}
@@ -66,6 +74,13 @@ img{display:block;max-width:100%}
 .links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;border-radius:2px;background:var(--acc);transition:width .3s var(--e)}
 .links a:hover,.links a.current{color:var(--deep)}
 .links a:hover::after,.links a.current::after{width:100%}
+.tools{display:flex;gap:6px;flex:none;margin-left:4px}
+.tool{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--body);font-family:var(--h);font-size:11px;font-weight:800;letter-spacing:.06em;cursor:pointer;transition:.25s;line-height:1}
+.tool:hover{color:#fff;background:var(--acc);border-color:var(--acc)}
+.tool svg{width:15px;height:15px}
+.ico-sun{display:none}
+[data-theme="dark"] .ico-sun{display:block}
+[data-theme="dark"] .ico-moon{display:none}
 
 /* views */
 .view{display:none}
@@ -156,7 +171,7 @@ section.blk{padding:56px 0 6px}
 .bar .cnt b{color:var(--acc)}
 .bar .cnt a{color:var(--deep);text-decoration:underline}
 .search{position:relative;flex:1;min-width:200px;max-width:330px}
-.search input{width:100%;padding:10px 14px 10px 36px;background:#fff;border:1px solid var(--line);border-radius:999px;color:var(--ink);font-family:var(--f);font-size:15px;outline:none;transition:.25s}
+.search input{width:100%;padding:10px 14px 10px 36px;background:var(--card);border:1px solid var(--line);border-radius:999px;color:var(--ink);font-family:var(--f);font-size:15px;outline:none;transition:.25s}
 .search input:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(239,77,63,.13)}
 .search input::placeholder{color:#b39a91}
 .search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:13px;height:13px;stroke:#b39a91}
@@ -188,7 +203,7 @@ section.blk{padding:56px 0 6px}
 
 /* rows (certs) */
 .rows{display:flex;flex-direction:column;gap:8px}
-.rowitem{display:flex;align-items:center;gap:12px;padding:13px 16px;background:#fff;border:1px solid var(--line);border-left:3px solid #fbd0bf;border-radius:12px;transition:.25s}
+.rowitem{display:flex;align-items:center;gap:12px;padding:13px 16px;background:var(--card);border:1px solid var(--line);border-left:3px solid #fbd0bf;border-radius:12px;transition:.25s}
 .rowitem:hover{background:#fffaf6;border-left-color:var(--acc);border-color:#f6b7a3}
 .rowitem .n{flex:1;min-width:0}
 .rowitem .n b{display:block;font-family:var(--h);font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
@@ -228,37 +243,88 @@ footer{margin-top:64px;padding:44px 20px 34px;border-top:1px solid var(--line);b
 /* modal */
 .modal{position:fixed;inset:0;z-index:1000;display:none;place-items:center;padding:20px;background:rgba(60,25,15,.45);backdrop-filter:blur(6px)}
 .modal.on{display:grid}
-.sheet{width:min(460px,100%);background:#fff;border:1px solid var(--line);border-radius:22px;padding:26px;position:relative;box-shadow:0 40px 80px -30px rgba(90,40,20,.6);animation:pop .3s var(--e)}
+.sheet{width:min(460px,100%);background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px;position:relative;box-shadow:0 40px 80px -30px rgba(90,40,20,.6);animation:pop .3s var(--e)}
 @keyframes pop{from{transform:translateY(14px) scale(.97);opacity:0}}
 .sheet h3{font-family:var(--h);font-size:14px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin-bottom:10px;padding-right:30px}
 .sheet p{font-size:15px;color:var(--muted);margin-bottom:9px}
 .sheet ol{margin:0 0 14px 18px;color:var(--muted);font-size:15px}
 .sheet ol li{margin-bottom:6px}
-.mono{font-family:ui-monospace,monospace;font-size:10.5px;color:var(--deep);word-break:break-all;background:#fff5ef;border:1px solid var(--line);border-radius:10px;padding:9px;margin-bottom:13px;max-height:100px;overflow:auto;-webkit-user-select:all;user-select:all}
-.close{position:absolute;top:12px;right:12px;width:28px;height:28px;display:grid;place-items:center;background:#fff;border:1px solid var(--line);border-radius:50%;color:var(--muted);cursor:pointer}
+.mono{font-family:ui-monospace,monospace;font-size:10.5px;color:var(--deep);word-break:break-all;background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:9px;margin-bottom:13px;max-height:100px;overflow:auto;-webkit-user-select:all;user-select:all}
+.close{position:absolute;top:12px;right:12px;width:28px;height:28px;display:grid;place-items:center;background:var(--card);border:1px solid var(--line);border-radius:50%;color:var(--muted);cursor:pointer}
 .close:hover{color:var(--deep);border-color:#f6b7a3}
-.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,90px);z-index:1100;background:var(--ink);color:#fff;padding:11px 20px;border-radius:999px;font-family:var(--h);font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;opacity:0;transition:.35s var(--e);pointer-events:none;box-shadow:0 16px 34px -16px rgba(0,0,0,.7)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,90px);z-index:1100;background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:999px;font-family:var(--h);font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;opacity:0;transition:.35s var(--e);pointer-events:none;box-shadow:0 16px 34px -16px rgba(0,0,0,.7)}
 .toast.on{transform:translate(-50%,0);opacity:1}
 
 @media(max-width:560px){.links{gap:12px;font-size:9.5px;letter-spacing:.04em}.brand b{font-size:21px}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 :focus-visible{outline:3px solid var(--acc);outline-offset:3px}
+
+/* ================= DARK ================= */
+[data-theme="dark"]{
+--bg:#141010;--card:#1e1717;--ink:#f7ede5;--body:#cbb9af;--muted:#9c8b81;
+--line:#342725;--acc:#ff6a56;--acc2:#ffa04a;--deep:#ff8873;--soft:#2a1c1a}
+[data-theme="dark"] .grain{opacity:.05;mix-blend-mode:screen}
+[data-theme="dark"] .ticker{background:linear-gradient(90deg,#a5231a,#7d1a13)}
+[data-theme="dark"] .nav{background:rgba(20,16,16,.9)}
+[data-theme="dark"] .hero{background:linear-gradient(180deg,#8c2415 0%,#5e1a11 30%,#2b1815 64%,var(--bg) 100%)}
+[data-theme="dark"] h1.big{color:#fff2e8;text-shadow:0 4px 26px rgba(0,0,0,.45)}
+[data-theme="dark"] .sub{color:#e6cdc2}
+[data-theme="dark"] .sub em{color:#ffb3a2}
+[data-theme="dark"] .eyebrow{color:#ffd9ce;text-shadow:none}
+[data-theme="dark"] .btn{background:var(--card);color:var(--ink);box-shadow:none}
+[data-theme="dark"] .btn:hover{color:#fff}
+[data-theme="dark"] .btn.solid{background:linear-gradient(135deg,#ef4d3f,#a8231c);color:#fff}
+[data-theme="dark"] .chip{background:rgba(0,0,0,.4);border-color:rgba(255,255,255,.14);color:#e0c6ba}
+[data-theme="dark"] .sky{opacity:.45}
+[data-theme="dark"] .drop{background:#ffd9c9}
+[data-theme="dark"] .tile.dns-t{background:linear-gradient(150deg,#2a2018,#1e1717);border-color:#4a3a22}
+[data-theme="dark"] .step::before{color:#4a2a24}
+[data-theme="dark"] .step code,[data-theme="dark"] .panel code{background:#33201d;color:#ffb3a2}
+[data-theme="dark"] .note{background:#2a1b17;border-color:#4a2f28;border-left-color:var(--acc)}
+[data-theme="dark"] .note p{color:#dcc6ba}
+[data-theme="dark"] .note.amber{background:#2a2418;border-color:#4a3f22;border-left-color:var(--gold)}
+[data-theme="dark"] .phead::before{background:radial-gradient(620px 240px at 6% 50%,#3a1d16,transparent 72%)}
+[data-theme="dark"] .bar .cnt a,[data-theme="dark"] .note a,[data-theme="dark"] .mono{color:#ffa695}
+[data-theme="dark"] .search input{background:#1a1414}
+[data-theme="dark"] .search input::placeholder{color:#7d6d65}
+[data-theme="dark"] .search svg{stroke:#7d6d65}
+[data-theme="dark"] .card .thumb{background:radial-gradient(120px 90px at 50% 40%,#3a221c,#1a1414)}
+[data-theme="dark"] .panel{background:linear-gradient(140deg,#2c1d18,#1c1514);border-color:#4a2f28}
+[data-theme="dark"] .rowitem{border-left-color:#4a2a24;border-color:var(--line)}
+[data-theme="dark"] .rowitem:hover{background:#241b19;border-color:#5a3a30}
+[data-theme="dark"] .pw{background:#2f2716;border-color:#5a4a24;color:#e8c876}
+[data-theme="dark"] .pw:hover{background:#3d3218}
+[data-theme="dark"] .dl{color:var(--muted)}
+[data-theme="dark"] .warn-box{background:#2a1b17;border-color:#4a2f28}
+[data-theme="dark"] .warn-box p{color:#dcc6ba}
+[data-theme="dark"] footer{background:linear-gradient(180deg,#241816,transparent)}
+[data-theme="dark"] .modal{background:rgba(0,0,0,.7)}
+[data-theme="dark"] .close{background:#241b19}
+[data-theme="dark"] .toast{background:#f7ede5;color:#141010}
+[data-theme="dark"] .tool:hover{color:#141010}
 </style>
 </head>
 <body>
 <div class="grain"></div>
 
-<div class="ticker"><span><b>ZetaSing</b> &nbsp;·&nbsp; Certificados de empresa vigentes &nbsp;·&nbsp; Instalación OTA directa &nbsp;·&nbsp; Perfil DNS propio &nbsp;·&nbsp; ESign &amp; KSign &nbsp;·&nbsp; Sin PC &nbsp;·&nbsp; <b>El sello está abierto</b> &nbsp;·&nbsp; Certificados de empresa vigentes &nbsp;·&nbsp; Instalación OTA directa &nbsp;·&nbsp;</span></div>
+<div class="ticker"><span data-i18n="tick"></span></div>
 
 <nav class="nav">
   <a class="brand" href="#/" data-nav="home"><img class="sigil" src="/img/icon.png" alt="ZetaSing" width="28" height="28" fetchpriority="high" decoding="async"><b>ZetaSing</b></a>
   <div class="links">
-    <a href="#/" data-nav="home">Inicio</a>
+    <a href="#/" data-nav="home" data-i18n="nav.home">Home</a>
     <a href="#/esign" data-nav="esign">ESign</a>
     <a href="#/ksign" data-nav="ksign">KSign</a>
-    <a href="#/dns" data-nav="dns">DNS</a>
-    <a href="#/certs" data-nav="certs">Certificados</a>
-    <a href="#/guia" data-nav="guia">Guía</a>
+    <a href="#/dns" data-nav="dns" data-i18n="nav.dns">DNS</a>
+    <a href="#/certs" data-nav="certs" data-i18n="nav.certs">Certificates</a>
+    <a href="#/guia" data-nav="guia" data-i18n="nav.guide">Guide</a>
+  </div>
+  <div class="tools">
+    <button class="tool" id="langBtn" aria-label="Switch to Spanish">ES</button>
+    <button class="tool" id="themeBtn" aria-label="Toggle dark mode">
+      <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/></svg>
+    </button>
   </div>
 </nav>
 
@@ -284,155 +350,155 @@ footer{margin-top:64px;padding:44px 20px 34px;border-top:1px solid var(--line);b
       </svg>
       <svg class="drip drip-top" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0,0 L0,50 C0,68 5,100 13,100 C21,100 24,68 24,50 L58,50 C58,60 64,112 74,112 C84,112 86,60 86,50 L120,50 C120,72 128,94 136,94 C144,94 146,72 146,50 L196,50 C196,58 202,120 212,120 C222,120 224,58 224,50 L268,50 C268,66 274,90 282,90 C290,90 292,66 292,50 L344,50 C344,60 350,108 360,108 C370,108 372,60 372,50 L418,50 C418,74 426,100 434,100 C442,100 444,74 444,50 L498,50 C498,58 504,118 514,118 C524,118 526,58 526,50 L572,50 C572,64 578,86 586,86 C594,86 596,64 596,50 L646,50 C646,72 654,112 662,112 C670,112 672,72 672,50 L722,50 C722,58 728,98 738,98 C748,98 750,58 750,50 L802,50 C802,68 808,92 816,92 C824,92 826,68 826,50 L878,50 C878,60 884,116 894,116 C904,116 906,60 906,50 L952,50 C952,76 960,102 968,102 C976,102 978,76 978,50 L1028,50 C1028,58 1034,120 1044,120 C1054,120 1056,58 1056,50 L1102,50 C1102,66 1108,88 1116,88 C1124,88 1126,66 1126,50 L1176,50 C1176,60 1182,110 1192,110 C1202,110 1204,60 1204,50 L1252,50 C1252,72 1260,96 1268,96 C1276,96 1278,72 1278,50 L1326,50 C1326,58 1332,124 1342,124 C1352,124 1354,58 1354,50 L1402,50 C1402,66 1408,90 1416,90 C1424,90 1426,66 1426,50 L1440,50 L1440,0 Z"/></svg>
       <div class="drop a"></div><div class="drop b"></div><div class="drop c"></div>
-      <div class="eyebrow">Sello de sangre · OTA</div>
+      <div class="eyebrow" data-i18n="hero.eyebrow">Blood seal · OTA</div>
       <h1 class="big">ZetaSing</h1>
-      <p class="sub">Instala <em>ESign</em> y <em>KSign</em> en tu iPhone con certificados de empresa. Sin PC, sin cables, sin firmas de siete días. <em>El pacto se firma aquí.</em></p>
+      <p class="sub" data-i18n="hero.sub">Install <em>ESign</em> and <em>KSign</em> on your iPhone with company certificates. No PC, no cables, no 7-day signatures. <em>The pact is signed here.</em></p>
       <div class="cta">
         <a class="btn solid" href="#/esign"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0 0 5-5m-5 5-5-5M4 21h16"/></svg><span>ESign</span></a>
         <a class="btn" href="#/ksign"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0 0 5-5m-5 5-5-5M4 21h16"/></svg><span>KSign</span></a>
-        <a class="btn" href="#/dns"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18"/></svg><span>Perfil DNS</span></a>
+        <a class="btn" href="#/dns"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18"/></svg><span data-i18n="hero.cta3">DNS Profile</span></a>
       </div>
-      <div class="chips"><span class="chip"><i class="dot"></i>Servidores activos</span><span class="chip"><i class="dot"></i>Certificados vigentes</span><span class="chip"><i class="dot am"></i>Requiere iOS 14+</span></div>
+      <div class="chips"><span class="chip"><i class="dot"></i><span data-i18n="chip.servers">Servers up</span></span><span class="chip"><i class="dot"></i><span data-i18n="chip.certs">Certificates live</span></span><span class="chip"><i class="dot am"></i><span data-i18n="chip.ios">Requires iOS 14+</span></span></div>
       <svg class="drip drip-bottom" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0,0 L0,50 C0,68 5,100 13,100 C21,100 24,68 24,50 L58,50 C58,60 64,112 74,112 C84,112 86,60 86,50 L120,50 C120,72 128,94 136,94 C144,94 146,72 146,50 L196,50 C196,58 202,120 212,120 C222,120 224,58 224,50 L268,50 C268,66 274,90 282,90 C290,90 292,66 292,50 L344,50 C344,60 350,108 360,108 C370,108 372,60 372,50 L418,50 C418,74 426,100 434,100 C442,100 444,74 444,50 L498,50 C498,58 504,118 514,118 C524,118 526,58 526,50 L572,50 C572,64 578,86 586,86 C594,86 596,64 596,50 L646,50 C646,72 654,112 662,112 C670,112 672,72 672,50 L722,50 C722,58 728,98 738,98 C748,98 750,58 750,50 L802,50 C802,68 808,92 816,92 C824,92 826,68 826,50 L878,50 C878,60 884,116 894,116 C904,116 906,60 906,50 L952,50 C952,76 960,102 968,102 C976,102 978,76 978,50 L1028,50 C1028,58 1034,120 1044,120 C1054,120 1056,58 1056,50 L1102,50 C1102,66 1108,88 1116,88 C1124,88 1126,66 1126,50 L1176,50 C1176,60 1182,110 1192,110 C1202,110 1204,60 1204,50 L1252,50 C1252,72 1260,96 1268,96 C1276,96 1278,72 1278,50 L1326,50 C1326,58 1332,124 1342,124 C1352,124 1354,58 1354,50 L1402,50 C1402,66 1408,90 1416,90 C1424,90 1426,66 1426,50 L1440,50 L1440,0 Z"/></svg>
     </header>
 
     <div class="wrap">
       <section class="blk">
-        <div class="head"><h2><small>Tres puertas</small>Elige tu camino</h2><p>Todo el ritual empieza por el perfil DNS. Después, escoge el firmador.</p></div>
+        <div class="head"><h2><small data-i18n="home.doorsSmall">Three doors</small><span data-i18n="home.doorsTitle">Choose your path</span></h2><p data-i18n="home.doorsDesc">Every ritual starts with the DNS profile. Then pick a signer.</p></div>
         <div class="tiles">
-          <a class="tile" href="#/esign"><img class="emb" src="/img/esign.png" alt="Logo de ESign" width="88" height="88" fetchpriority="high" decoding="async"><h3>ESign</h3><p>18 sellos con instalación directa desde el servidor oficial.</p><span class="go">Abrir catálogo</span></a>
-          <a class="tile" href="#/ksign"><img class="emb" src="/img/ksign.png" alt="Logo de KSign" width="88" height="88" fetchpriority="high" decoding="async"><h3>KSign</h3><p>18 sellos con el mismo flujo directo y perfiles renovados.</p><span class="go">Abrir catálogo</span></a>
-          <a class="tile dns-t" href="#/dns"><img class="emb" src="/img/icon.png" alt="Perfil DNS" width="88" height="88" decoding="async"><h3>Perfil DNS</h3><p>Configura el DNS y te deja ZetaSing en la pantalla de inicio.</p><span class="go">Instalar ahora</span></a>
+          <a class="tile" href="#/esign"><img class="emb" src="/img/esign.png" alt="ESign logo" width="88" height="88" fetchpriority="high" decoding="async"><h3>ESign</h3><p data-i18n="tile.esignDesc">18 seals with direct install from the official server.</p><span class="go" data-i18n="tile.open">Open catalog</span></a>
+          <a class="tile" href="#/ksign"><img class="emb" src="/img/ksign.png" alt="KSign logo" width="88" height="88" fetchpriority="high" decoding="async"><h3>KSign</h3><p data-i18n="tile.ksignDesc">18 seals, same direct flow with renewed profiles.</p><span class="go" data-i18n="tile.open">Open catalog</span></a>
+          <a class="tile dns-t" href="#/dns"><img class="emb" src="/img/icon.png" alt="DNS profile" width="88" height="88" decoding="async"><h3 data-i18n="tile.dnsTitle">DNS Profile</h3><p data-i18n="tile.dnsDesc">Configures DNS and puts ZetaSing on your home screen.</p><span class="go" data-i18n="tile.installNow">Install now</span></a>
         </div>
-        <div class="note"><p><b>Antes de nada:</b> abre ZetaSing en <b>Safari</b> desde el iPhone. Desde Instagram, TikTok o Chrome los enlaces de instalación no se disparan.</p></div>
+        <div class="note"><p data-i18n="home.note"><b>First things first:</b> open ZetaSing in <b>Safari</b> on the iPhone. Install links do not fire from Instagram, TikTok or Chrome.</p></div>
       </section>
 
       <section class="blk">
-        <div class="head"><h2><small>El ritual</small>Cómo se instala</h2><p>Cuatro pasos, en orden. Saltarse uno es la causa número uno de fallos.</p></div>
+        <div class="head"><h2><small data-i18n="ritual.small">The ritual</small><span data-i18n="ritual.title">How it installs</span></h2><p data-i18n="ritual.desc">Four steps, in order. Skipping one is the number one cause of failures.</p></div>
         <div class="steps">
-          <div class="step"><h4>Abre en Safari</h4><p>Esta página debe verse en Safari del iPhone.</p></div>
-          <div class="step"><h4>Instala el perfil</h4><p>Perfil ZetaSing: DNS y acceso directo con icono.</p></div>
-          <div class="step"><h4>Elige un sello</h4><p>Pulsa «Instalar» en cualquier certificado del catálogo.</p></div>
-          <div class="step"><h4>Confía en el perfil</h4><p>Ajustes → General → VPN y gestión → Confiar.</p></div>
+          <div class="step"><h4 data-i18n="s1.t">Open in Safari</h4><p data-i18n="s1.d">This page must be seen in Safari on the iPhone.</p></div>
+          <div class="step"><h4 data-i18n="s2.t">Install the profile</h4><p data-i18n="s2.d">ZetaSing profile: DNS and home screen shortcut with icon.</p></div>
+          <div class="step"><h4 data-i18n="s3.t">Pick a seal</h4><p data-i18n="s3.d">Tap "Install" on any certificate in the catalog.</p></div>
+          <div class="step"><h4 data-i18n="s4.t">Trust the profile</h4><p data-i18n="s4.d">Settings → General → VPN &amp; Device Management → Trust.</p></div>
         </div>
-        <div class="cta" style="margin-top:24px"><a class="btn" href="#/guia"><span>Guía completa</span></a></div>
+        <div class="cta" style="margin-top:24px"><a class="btn" href="#/guia"><span data-i18n="ritual.guide">Full guide</span></a></div>
       </section>
     </div>
   </div>
 
   <div class="view" data-view="esign">
     <header class="phead">
-      <img class="emb" src="/img/esign.png" alt="Logo de ESign" width="104" height="104" fetchpriority="high" decoding="async">
-      <div class="k"><span class="eyebrow">Firmador · OTA</span><h1>ESign</h1>
-      <p>18 certificados de empresa servidos directamente desde el servidor oficial. Si un sello falla o se revoca, baja y prueba el siguiente.</p>
+      <img class="emb" src="/img/esign.png" alt="ESign logo" width="104" height="104" fetchpriority="high" decoding="async">
+      <div class="k"><span class="eyebrow" data-i18n="signer.eyebrow">Signer · OTA</span><h1>ESign</h1>
+      <p data-i18n="esign.desc">18 company certificates served straight from the official server. If a seal fails or gets revoked, go down the list and try the next one.</p>
       <div class="cta">
-        <a class="btn" href="https://github.com/khoindvn/khoindvn.github.io/releases/download/ipa/ESign.ipa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 20h16"/></svg><span>Descargar .ipa directo</span></a>
+        <a class="btn" href="https://github.com/khoindvn/khoindvn.github.io/releases/download/ipa/ESign.ipa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 20h16"/></svg><span data-i18n="signer.dl">Download .ipa directly</span></a>
       </div></div>
     </header>
-    <div class="warn"><div class="warn-box" id="warnBox"><p id="warnTxt">Estás fuera de Safari en iPhone. Los enlaces OTA <b>solo se lanzan desde Safari</b>.</p><button class="warn-x" id="warnX" aria-label="Cerrar">&times;</button></div></div>
+    <div class="warn"><div class="warn-box" id="warnBox"><p id="warnTxt" data-i18n="warn">You are outside Safari on iPhone. OTA links <b>only launch from Safari</b>.</p><button class="warn-x" id="warnX" aria-label="Close">&times;</button></div></div>
     <div class="wrap">
-      <div class="bar"><div class="cnt"><b id="nE">0</b> sellos · <a href="#/dns">instala el perfil primero</a></div>
-      <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="qE" type="search" placeholder="Buscar empresa…" aria-label="Buscar"></div></div>
+      <div class="bar"><div class="cnt"><b id="nE">0</b> <span data-i18n="bar.seals">seals</span> · <a href="#/dns" data-i18n="bar.first">install the profile first</a></div>
+      <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="qE" type="search" data-i18n-ph="search.ph" placeholder="Search company…" aria-label="Search"></div></div>
       <div class="grid" id="gridE"></div>
     </div>
   </div>
 
   <div class="view" data-view="ksign">
     <header class="phead">
-      <img class="emb" src="/img/ksign.png" alt="Logo de KSign" width="104" height="104" fetchpriority="high" decoding="async">
-      <div class="k"><span class="eyebrow">Firmador · OTA</span><h1>KSign</h1>
-      <p>18 certificados de empresa servidos directamente desde el servidor oficial. Alternativa estable: si un sello se revoca, cambia al siguiente.</p>
+      <img class="emb" src="/img/ksign.png" alt="KSign logo" width="104" height="104" fetchpriority="high" decoding="async">
+      <div class="k"><span class="eyebrow" data-i18n="signer.eyebrow">Signer · OTA</span><h1>KSign</h1>
+      <p data-i18n="ksign.desc">18 company certificates served straight from the official server. Stable alternative: if a seal gets revoked, switch to the next.</p>
       <div class="cta">
-        <a class="btn" href="https://github.com/khoindvn/khoindvn.github.io/releases/download/ipa/KSign.ipa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 20h16"/></svg><span>Descargar .ipa directo</span></a>
+        <a class="btn" href="https://github.com/khoindvn/khoindvn.github.io/releases/download/ipa/KSign.ipa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 20h16"/></svg><span data-i18n="signer.dl">Download .ipa directly</span></a>
       </div></div>
     </header>
-    <div class="warn"><div class="warn-box" id="warnBoxK"><p id="warnTxtK">Estás fuera de Safari en iPhone. Los enlaces OTA <b>solo se lanzan desde Safari</b>.</p><button class="warn-x" id="warnXK" aria-label="Cerrar">&times;</button></div></div>
+    <div class="warn"><div class="warn-box" id="warnBoxK"><p id="warnTxtK" data-i18n="warn">You are outside Safari on iPhone. OTA links <b>only launch from Safari</b>.</p><button class="warn-x" id="warnXK" aria-label="Close">&times;</button></div></div>
     <div class="wrap">
-      <div class="bar"><div class="cnt"><b id="nK">0</b> sellos · <a href="#/dns">instala el perfil primero</a></div>
-      <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="qK" type="search" placeholder="Buscar empresa…" aria-label="Buscar"></div></div>
+      <div class="bar"><div class="cnt"><b id="nK">0</b> <span data-i18n="bar.seals">seals</span> · <a href="#/dns" data-i18n="bar.first">install the profile first</a></div>
+      <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="qK" type="search" data-i18n-ph="search.ph" placeholder="Search company…" aria-label="Search"></div></div>
       <div class="grid" id="gridK"></div>
     </div>
   </div>
 
   <div class="view" data-view="dns">
     <header class="phead" style="display:block">
-      <span class="eyebrow">Paso cero · obligatorio</span><h1>Perfil DNS</h1>
-      <p>El perfil de ZetaSing configura el DNS del dispositivo y, además, deja ZetaSing en tu pantalla de inicio con su icono, como una app. Se instala una sola vez.</p>
+      <span class="eyebrow" data-i18n="dns.eyebrow">Step zero · required</span><h1 data-i18n="dns.title">DNS Profile</h1>
+      <p data-i18n="dns.desc">The ZetaSing profile configures the device DNS and also puts ZetaSing on your home screen with its icon, like an app. It is installed once.</p>
     </header>
     <div class="wrap" style="max-width:820px">
       <div class="panel">
-        <h3>Instalar perfil ZetaSing</h3>
-        <p>Se genera un archivo <code>.mobileconfig</code> firmado con el nombre de ZetaSing. Contiene el ajuste de DNS y el acceso directo con icono. Tras descargarlo, iOS te pedirá confirmación en Ajustes.</p>
+        <h3 data-i18n="panel.t">Install ZetaSing profile</h3>
+        <p data-i18n="panel.d">A <code>.mobileconfig</code> file signed with the ZetaSing name is generated. It holds the DNS setting and the shortcut with icon. After downloading, iOS will ask for confirmation in Settings.</p>
         <div class="acts">
-          <button class="btn solid" id="dlProfile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0 0 5-5m-5 5-5-5M4 21h16"/></svg><span>Descargar perfil</span></button>
+          <button class="btn solid" id="dlProfile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0 0 5-5m-5 5-5-5M4 21h16"/></svg><span data-i18n="panel.btn">Download profile</span></button>
         </div>
       </div>
-      <div class="head" style="margin-top:40px"><h2><small>Instalación</small>Qué hacer tras descargarlo</h2></div>
+      <div class="head" style="margin-top:40px"><h2><small data-i18n="dns.small">Installation</small><span data-i18n="dns.h">What to do after downloading</span></h2></div>
       <div class="steps col">
-        <div class="step"><h4>Ábrelo en Safari</h4><p>El botón debe pulsarse desde <b>Safari</b> en el iPhone. Aparecerá el aviso «Este sitio intenta descargar un perfil de configuración».</p></div>
-        <div class="step"><h4>Permite la descarga</h4><p>Pulsa <code>Permitir</code>. El perfil queda descargado, todavía sin instalar.</p></div>
-        <div class="step"><h4>Ve a Ajustes</h4><p><code>Ajustes → General → VPN y gestión de dispositivos</code>. Verás «ZetaSing DNS» bajo «Perfil descargado».</p></div>
-        <div class="step"><h4>Instálalo</h4><p>Pulsa el perfil → <code>Instalar</code> → código → <code>Instalar</code> → <code>Instalar</code> otra vez.</p></div>
-        <div class="step"><h4>Activa el DNS</h4><p>En la misma pantalla entra en <code>DNS</code> y comprueba que el perfil está activo. Si no aparece, reinicia el iPhone.</p></div>
-        <div class="step"><h4>Comprueba el icono</h4><p>Al instalar el perfil, ZetaSing aparece en la pantalla de inicio con su emblema. Ábrelo desde ahí para navegar a pantalla completa.</p></div>
+        <div class="step"><h4 data-i18n="d1.t">Open it in Safari</h4><p data-i18n="d1.d">The button must be pressed from <b>Safari</b> on the iPhone. The notice "This website is trying to download a configuration profile" will appear.</p></div>
+        <div class="step"><h4 data-i18n="d2.t">Allow the download</h4><p data-i18n="d2.d">Tap <code>Allow</code>. The profile is downloaded, not installed yet.</p></div>
+        <div class="step"><h4 data-i18n="d3.t">Go to Settings</h4><p data-i18n="d3.d"><code>Settings → General → VPN &amp; Device Management</code>. You will see "ZetaSing DNS" under "Downloaded Profile".</p></div>
+        <div class="step"><h4 data-i18n="d4.t">Install it</h4><p data-i18n="d4.d">Tap the profile → <code>Install</code> → passcode → <code>Install</code> → <code>Install</code> again.</p></div>
+        <div class="step"><h4 data-i18n="d5.t">Enable DNS</h4><p data-i18n="d5.d">On the same screen open <code>DNS</code> and check the profile is active. If it does not show, restart the iPhone.</p></div>
+        <div class="step"><h4 data-i18n="d6.t">Check the icon</h4><p data-i18n="d6.d">Installing the profile puts ZetaSing on your home screen with its emblem. Open it from there to browse full screen.</p></div>
       </div>
-      <div class="note amber"><p><b>Importante:</b> si quitas el perfil, las apps firmadas dejan de conectar hasta que lo reinstales. No hay que repetirlo entre instalaciones: se queda puesto.</p></div>
-      <div class="note"><p><b>Nota técnica:</b> el perfil resuelve por DNS cifrado (DoH) sobre <code>1.1.1.1</code>, que es lo que mantiene vivos los certificados de empresa cuando Apple los bloquea por DNS normal. El acceso directo se genera con la dirección de esta web, así que si cambias de dominio vuelve a descargarlo.</p></div>
+      <div class="note amber"><p data-i18n="dns.warn"><b>Important:</b> if you remove the profile, signed apps stop connecting until you reinstall it. It does not need repeating between installs: it stays put.</p></div>
+      <div class="note"><p data-i18n="dns.tech"><b>Technical note:</b> the profile resolves over encrypted DNS (DoH) via <code>1.1.1.1</code>, which is what keeps company certificates alive when Apple blocks them on regular DNS. The shortcut is generated with this website address, so if you change domain, download it again.</p></div>
     </div>
   </div>
 
   <div class="view" data-view="certs">
     <header class="phead" style="display:block">
-      <span class="eyebrow">Firma manual</span><h1>Certificados .zip</h1>
-      <p>Paquetes con <code>.p12</code> y <code>.mobileprovision</code> para importar dentro de ESign o KSign. Toca la contraseña para copiarla.</p>
+      <span class="eyebrow" data-i18n="certs.eyebrow">Manual signing</span><h1 data-i18n="certs.title">Certificates .zip</h1>
+      <p data-i18n="certs.desc">Packages with <code>.p12</code> and <code>.mobileprovision</code> to import inside ESign or KSign. Tap the password to copy it.</p>
     </header>
     <div class="wrap" style="max-width:900px">
-      <div class="note"><p><b>Ojo:</b> un paquete sirve para firmar apps, no para instalar el firmador. Para el firmador usa los catálogos de <a href="#/esign">ESign</a> o <a href="#/ksign">KSign</a>. El perfil <a href="#/dns">DNS</a> sigue siendo obligatorio.</p></div>
-      <div class="head" style="margin-top:36px"><h2><small>Paquetes</small>Descargas</h2></div>
+      <div class="note"><p data-i18n="certs.note"><b>Careful:</b> a package is for signing apps, not for installing the signer. For the signer use the <a href="#/esign">ESign</a> or <a href="#/ksign">KSign</a> catalogs. The <a href="#/dns">DNS</a> profile is still required.</p></div>
+      <div class="head" style="margin-top:36px"><h2><small data-i18n="certs.small">Packages</small><span data-i18n="certs.h">Downloads</span></h2></div>
       <div class="rows" id="rows"></div>
-      <div class="head" style="margin-top:36px"><h2><small>Uso</small>Cómo se importa un paquete</h2></div>
+      <div class="head" style="margin-top:36px"><h2><small data-i18n="certs.useSmall">Usage</small><span data-i18n="certs.useH">How to import a package</span></h2></div>
       <div class="steps col">
-        <div class="step"><h4>Descarga y descomprime</h4><p>Baja el <code>.zip</code> y ábrelo en la app Archivos. Descomprime con la propia app de Archivos.</p></div>
-        <div class="step"><h4>Abre el firmador</h4><p>En ESign o KSign entra en la sección de certificados o «Firma».</p></div>
-        <div class="step"><h4>Importa los archivos</h4><p>Selecciona el <code>.p12</code> y el <code>.mobileprovision</code> descomprimidos.</p></div>
-        <div class="step"><h4>Introduce la contraseña</h4><p>La del listado de arriba. Si el paquete no tiene, se deja vacío.</p></div>
-        <div class="step"><h4>Firma tu IPA</h4><p>Importa el IPA y fírmalo con el certificado ya cargado.</p></div>
+        <div class="step"><h4 data-i18n="c1.t">Download and unzip</h4><p data-i18n="c1.d">Grab the <code>.zip</code> and open it in the Files app. Unzip it with the Files app itself.</p></div>
+        <div class="step"><h4 data-i18n="c2.t">Open the signer</h4><p data-i18n="c2.d">In ESign or KSign go to the certificates or "Sign" section.</p></div>
+        <div class="step"><h4 data-i18n="c3.t">Import the files</h4><p data-i18n="c3.d">Select the unzipped <code>.p12</code> and <code>.mobileprovision</code>.</p></div>
+        <div class="step"><h4 data-i18n="c4.t">Enter the password</h4><p data-i18n="c4.d">The one in the list above. If the package has none, leave it empty.</p></div>
+        <div class="step"><h4 data-i18n="c5.t">Sign your IPA</h4><p data-i18n="c5.d">Import the IPA and sign it with the certificate already loaded.</p></div>
       </div>
     </div>
   </div>
 
   <div class="view" data-view="guia">
     <header class="phead" style="display:block">
-      <span class="eyebrow">El ritual completo</span><h1>Guía</h1>
-      <p>En orden y sin saltarse nada. Si algo falla, mira primero en las preguntas del final.</p>
+      <span class="eyebrow" data-i18n="guide.eyebrow">The full ritual</span><h1 data-i18n="guide.title">Guide</h1>
+      <p data-i18n="guide.desc">In order, no skipping. If something fails, check the questions at the end first.</p>
     </header>
     <div class="wrap" style="max-width:820px">
-      <div class="head"><h2><small>Antes de empezar</small>Instalación</h2></div>
+      <div class="head"><h2><small data-i18n="guide.beforeSmall">Before you start</small><span data-i18n="guide.beforeH">Installation</span></h2></div>
       <div class="steps col">
-        <div class="step"><h4>Abre en Safari</h4><p>Todo se hace en <b>Safari</b> desde el iPhone. Desde Instagram, TikTok, Facebook o Chrome los enlaces OTA no se disparan.</p></div>
-        <div class="step"><h4>Instala el perfil ZetaSing</h4><p>Ve a <a href="#/dns" style="color:var(--deep)">DNS</a> y sigue los pasos. Es obligatorio y se hace una sola vez.</p></div>
-        <div class="step"><h4>Elige un sello</h4><p>Entra en <a href="#/esign" style="color:var(--deep)">ESign</a> o <a href="#/ksign" style="color:var(--deep)">KSign</a> y pulsa «Instalar».</p></div>
-        <div class="step"><h4>Confirma el diálogo</h4><p>iOS mostrará «¿Instalar?». Pulsa <code>Instalar</code> y espera a que el icono aparezca en la pantalla de inicio.</p></div>
-        <div class="step"><h4>Confía en el perfil</h4><p><code>Ajustes → General → VPN y gestión de dispositivos</code> → toca la empresa → <code>Confiar</code>.</p></div>
-        <div class="step"><h4>Abre la app</h4><p>Con el DNS activo y el perfil confiado, la app abre con normalidad. Ya puedes firmar tus IPA.</p></div>
+        <div class="step"><h4 data-i18n="g1.t">Open in Safari</h4><p data-i18n="g1.d">Everything is done in <b>Safari</b> on the iPhone. OTA links do not fire from Instagram, TikTok, Facebook or Chrome.</p></div>
+        <div class="step"><h4 data-i18n="g2.t">Install the ZetaSing profile</h4><p data-i18n="g2.d">Go to <a href="#/dns">DNS</a> and follow the steps. It is required and done only once.</p></div>
+        <div class="step"><h4 data-i18n="g3.t">Pick a seal</h4><p data-i18n="g3.d">Open <a href="#/esign">ESign</a> or <a href="#/ksign">KSign</a> and tap "Install".</p></div>
+        <div class="step"><h4 data-i18n="g4.t">Confirm the dialog</h4><p data-i18n="g4.d">iOS will show "Install?". Tap <code>Install</code> and wait for the icon to appear on the home screen.</p></div>
+        <div class="step"><h4 data-i18n="g5.t">Trust the profile</h4><p data-i18n="g5.d"><code>Settings → General → VPN &amp; Device Management</code> → tap the company → <code>Trust</code>.</p></div>
+        <div class="step"><h4 data-i18n="g6.t">Open the app</h4><p data-i18n="g6.d">With DNS active and the profile trusted, the app opens normally. You can now sign your IPAs.</p></div>
       </div>
-      <div class="note"><p><b>Si el icono queda en gris o con «Esperando»:</b> cancela, borra el icono, comprueba que el DNS está activo y prueba otro sello.</p></div>
+      <div class="note"><p data-i18n="guide.note"><b>If the icon stays grey or says "Waiting":</b> cancel, delete the icon, check the DNS is active and try another seal.</p></div>
 
-      <div class="head" style="margin-top:40px"><h2><small>Firma de apps</small>Usar el firmador</h2></div>
+      <div class="head" style="margin-top:40px"><h2><small data-i18n="guide.signSmall">App signing</small><span data-i18n="guide.signH">Using the signer</span></h2></div>
       <div class="steps col">
-        <div class="step"><h4>Carga el certificado</h4><p>Descarga un paquete de <a href="#/certs" style="color:var(--deep)">Certificados</a> y descomprímelo en Archivos.</p></div>
-        <div class="step"><h4>Impórtalo en la app</h4><p>En la sección de certificados importa el <code>.p12</code> y el <code>.mobileprovision</code> con su contraseña.</p></div>
-        <div class="step"><h4>Firma la IPA</h4><p>Añade el IPA, elige el certificado y firma. Al terminar, instala el resultado.</p></div>
+        <div class="step"><h4 data-i18n="gs1.t">Load the certificate</h4><p data-i18n="gs1.d">Download a package from <a href="#/certs">Certificates</a> and unzip it in Files.</p></div>
+        <div class="step"><h4 data-i18n="gs2.t">Import it into the app</h4><p data-i18n="gs2.d">In the certificates section import the <code>.p12</code> and <code>.mobileprovision</code> with its password.</p></div>
+        <div class="step"><h4 data-i18n="gs3.t">Sign the IPA</h4><p data-i18n="gs3.d">Add the IPA, choose the certificate and sign. When done, install the result.</p></div>
       </div>
 
-      <div class="head" style="margin-top:40px"><h2><small>Consultas al sello</small>Preguntas frecuentes</h2></div>
+      <div class="head" style="margin-top:40px"><h2><small data-i18n="guide.faqSmall">Asking the seal</small><span data-i18n="guide.faqH">Frequent questions</span></h2></div>
       <div class="faq">
-        <details><summary>No pasa nada al pulsar «Instalar»</summary><p>Casi siempre es una de dos: no estás en Safari, o falta el perfil DNS. Abre la página desde Safari y vuelve a intentarlo.</p></details>
-        <details><summary>Sale «No se puede conectar con el servidor»</summary><p>Falta el DNS o el servidor OTA está saturado. Instala el perfil, reinicia y prueba otro certificado.</p></details>
-        <details><summary>«No se puede verificar la app» al abrirla</summary><p>Falta el paso de confiar: <code>Ajustes → General → VPN y gestión de dispositivos → Confiar</code>.</p></details>
-        <details><summary>¿El certificado es permanente?</summary><p>No. Las cuentas de empresa se revocan sin aviso cuando Apple las cierra. Cuando pase, cambia de sello y vuelve a firmar.</p></details>
-        <details><summary>¿Para qué sirve el perfil exactamente?</summary><p>Para dos cosas: activar el DNS cifrado que deja conectar a las apps firmadas, y dejarte ZetaSing en la pantalla de inicio con su icono, como una app normal.</p></details>
-        <details><summary>¿Funciona en iPad?</summary><p>Sí, con iPadOS 14 o superior y siempre desde Safari.</p></details>
+        <details><summary data-i18n="f1.q">Nothing happens when I tap "Install"</summary><p data-i18n="f1.a">It is almost always one of two: you are not in Safari, or the DNS profile is missing. Open the page in Safari and try again.</p></details>
+        <details><summary data-i18n="f2.q">"Cannot connect to server"</summary><p data-i18n="f2.a">The DNS is missing or the OTA server is saturated. Install the profile, restart and try another certificate.</p></details>
+        <details><summary data-i18n="f3.q">"Cannot verify the app" when opening it</summary><p data-i18n="f3.a">You skipped trusting it: <code>Settings → General → VPN &amp; Device Management → Trust</code>.</p></details>
+        <details><summary data-i18n="f4.q">Is the certificate permanent?</summary><p data-i18n="f4.a">No. Company accounts get revoked without warning when Apple closes them. When that happens, change seal and sign again.</p></details>
+        <details><summary data-i18n="f5.q">What is the profile actually for?</summary><p data-i18n="f5.a">Two things: enabling the encrypted DNS that lets signed apps connect, and putting ZetaSing on your home screen with its icon, like a normal app.</p></details>
+        <details><summary data-i18n="f6.q">Does it work on iPad?</summary><p data-i18n="f6.a">Yes, with iPadOS 14 or later and always from Safari.</p></details>
       </div>
     </div>
   </div>
@@ -440,23 +506,178 @@ footer{margin-top:64px;padding:44px 20px 34px;border-top:1px solid var(--line);b
 
 <footer>
   <div class="fb">ZetaSing</div>
-  <div class="fl"><a href="#/">Inicio</a><a href="#/esign">ESign</a><a href="#/ksign">KSign</a><a href="#/dns">DNS</a><a href="#/certs">Certificados</a><a href="#/guia">Guía</a></div>
-  <p class="disc"><b>Aviso:</b> contenido con fines educativos y de uso personal. Apps, certificados y perfiles pertenecen a sus titulares. Los plists se sirven desde el servidor de khoindvn. Úsalo bajo tu responsabilidad.</p>
+  <div class="fl"><a href="#/" data-i18n="nav.home">Home</a><a href="#/esign">ESign</a><a href="#/ksign">KSign</a><a href="#/dns" data-i18n="nav.dns">DNS</a><a href="#/certs" data-i18n="nav.certs">Certificates</a><a href="#/guia" data-i18n="nav.guide">Guide</a></div>
+  <p class="disc" data-i18n="footer.disc"><b>Notice:</b> educational content for personal use. Apps, certificates and profiles belong to their owners. Plists are served from khoindvn's server. Use at your own risk.</p>
 </footer>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true">
   <div class="sheet">
-    <button class="close" id="mClose" aria-label="Cerrar">&times;</button>
-    <h3 id="mTitle">Instalación manual</h3>
-    <p>La instalación no se ha lanzado desde este navegador. Hazlo así:</p>
-    <ol><li>Abre esta página en <b>Safari</b> del iPhone.</li><li>Mantén pulsado el enlace de abajo y elige «Copiar».</li><li>Pégalo en la barra de direcciones y pulsa «Ir».</li><li>Confirma la instalación.</li></ol>
+    <button class="close" id="mClose" aria-label="Close">&times;</button>
+    <h3 id="mTitle" data-i18n="modal.t">Manual install</h3>
+    <p data-i18n="modal.p">The install did not launch from this browser. Do it like this:</p>
+    <ol><li data-i18n="modal.1">Open this page in <b>Safari</b> on the iPhone.</li><li data-i18n="modal.2">Press and hold the link below and choose "Copy".</li><li data-i18n="modal.3">Paste it in the address bar and tap "Go".</li><li data-i18n="modal.4">Confirm the install.</li></ol>
     <div class="mono" id="mUrl"></div>
-    <a class="install" id="mGo" href="#">Abrir igual</a>
+    <a class="install" id="mGo" href="#" data-i18n="modal.open">Open anyway</a>
   </div>
 </div>
-<div class="toast" id="toast">Copiado</div>
+<div class="toast" id="toast">Copied</div>
 
 <script>
+/* ================= IDIOMA ================= */
+const I18N = {
+en:{
+ tick:'<b>ZetaSing</b> &nbsp;·&nbsp; Company certificates live &nbsp;·&nbsp; Direct OTA install &nbsp;·&nbsp; Own DNS profile &nbsp;·&nbsp; ESign &amp; KSign &nbsp;·&nbsp; No PC &nbsp;·&nbsp; <b>The seal is open</b> &nbsp;·&nbsp; Company certificates live &nbsp;·&nbsp; Direct OTA install &nbsp;·&nbsp;',
+ 'nav.home':'Home','nav.dns':'DNS','nav.certs':'Certificates','nav.guide':'Guide',
+ 'hero.eyebrow':'Blood seal · OTA',
+ 'hero.sub':'Install <em>ESign</em> and <em>KSign</em> on your iPhone with company certificates. No PC, no cables, no 7-day signatures. <em>The pact is signed here.</em>',
+ 'hero.cta3':'DNS Profile',
+ 'chip.servers':'Servers up','chip.certs':'Certificates live','chip.ios':'Requires iOS 14+',
+ 'home.doorsSmall':'Three doors','home.doorsTitle':'Choose your path','home.doorsDesc':'Every ritual starts with the DNS profile. Then pick a signer.',
+ 'tile.esignDesc':'18 seals with direct install from the official server.','tile.ksignDesc':'18 seals, same direct flow with renewed profiles.',
+ 'tile.dnsTitle':'DNS Profile','tile.dnsDesc':'Configures DNS and puts ZetaSing on your home screen.','tile.open':'Open catalog','tile.installNow':'Install now',
+ 'home.note':'<b>First things first:</b> open ZetaSing in <b>Safari</b> on the iPhone. Install links do not fire from Instagram, TikTok or Chrome.',
+ 'ritual.small':'The ritual','ritual.title':'How it installs','ritual.desc':'Four steps, in order. Skipping one is the number one cause of failures.','ritual.guide':'Full guide',
+ 's1.t':'Open in Safari','s1.d':'This page must be seen in Safari on the iPhone.',
+ 's2.t':'Install the profile','s2.d':'ZetaSing profile: DNS and home screen shortcut with icon.',
+ 's3.t':'Pick a seal','s3.d':'Tap "Install" on any certificate in the catalog.',
+ 's4.t':'Trust the profile','s4.d':'Settings → General → VPN &amp; Device Management → Trust.',
+ 'signer.eyebrow':'Signer · OTA','signer.dl':'Download .ipa directly',
+ 'esign.desc':'18 company certificates served straight from the official server. If a seal fails or gets revoked, go down the list and try the next one.',
+ 'ksign.desc':'18 company certificates served straight from the official server. Stable alternative: if a seal gets revoked, switch to the next.',
+ 'warn':'You are outside Safari on iPhone. OTA links <b>only launch from Safari</b>.',
+ 'bar.seals':'seals','bar.first':'install the profile first','search.ph':'Search company…','badge.new':'NEW',
+ 'dns.eyebrow':'Step zero · required','dns.title':'DNS Profile',
+ 'dns.desc':'The ZetaSing profile configures the device DNS and also puts ZetaSing on your home screen with its icon, like an app. It is installed once.',
+ 'panel.t':'Install ZetaSing profile',
+ 'panel.d':'A <code>.mobileconfig</code> file signed with the ZetaSing name is generated. It holds the DNS setting and the shortcut with icon. After downloading, iOS will ask for confirmation in Settings.',
+ 'panel.btn':'Download profile',
+ 'dns.small':'Installation','dns.h':'What to do after downloading',
+ 'd1.t':'Open it in Safari','d1.d':'The button must be pressed from <b>Safari</b> on the iPhone. The notice "This website is trying to download a configuration profile" will appear.',
+ 'd2.t':'Allow the download','d2.d':'Tap <code>Allow</code>. The profile is downloaded, not installed yet.',
+ 'd3.t':'Go to Settings','d3.d':'<code>Settings → General → VPN &amp; Device Management</code>. You will see "ZetaSing DNS" under "Downloaded Profile".',
+ 'd4.t':'Install it','d4.d':'Tap the profile → <code>Install</code> → passcode → <code>Install</code> → <code>Install</code> again.',
+ 'd5.t':'Enable DNS','d5.d':'On the same screen open <code>DNS</code> and check the profile is active. If it does not show, restart the iPhone.',
+ 'd6.t':'Check the icon','d6.d':'Installing the profile puts ZetaSing on your home screen with its emblem. Open it from there to browse full screen.',
+ 'dns.warn':'<b>Important:</b> if you remove the profile, signed apps stop connecting until you reinstall it. It does not need repeating between installs: it stays put.',
+ 'dns.tech':'<b>Technical note:</b> the profile resolves over encrypted DNS (DoH) via <code>1.1.1.1</code>, which is what keeps company certificates alive when Apple blocks them on regular DNS. The shortcut is generated with this website address, so if you change domain, download it again.',
+ 'certs.eyebrow':'Manual signing','certs.title':'Certificates .zip',
+ 'certs.desc':'Packages with <code>.p12</code> and <code>.mobileprovision</code> to import inside ESign or KSign. Tap the password to copy it.',
+ 'certs.note':'<b>Careful:</b> a package is for signing apps, not for installing the signer. For the signer use the <a href="#/esign">ESign</a> or <a href="#/ksign">KSign</a> catalogs. The <a href="#/dns">DNS</a> profile is still required.',
+ 'certs.small':'Packages','certs.h':'Downloads','certs.useSmall':'Usage','certs.useH':'How to import a package',
+ 'c1.t':'Download and unzip','c1.d':'Grab the <code>.zip</code> and open it in the Files app. Unzip it with the Files app itself.',
+ 'c2.t':'Open the signer','c2.d':'In ESign or KSign go to the certificates or "Sign" section.',
+ 'c3.t':'Import the files','c3.d':'Select the unzipped <code>.p12</code> and <code>.mobileprovision</code>.',
+ 'c4.t':'Enter the password','c4.d':'The one in the list above. If the package has none, leave it empty.',
+ 'c5.t':'Sign your IPA','c5.d':'Import the IPA and sign it with the certificate already loaded.',
+ 'note.all':'All certificates','note.nopw':'No password','note.ind':'Individual','note.indNew':'Individual · new','note.noPwSpan':'no password',
+ 'guide.eyebrow':'The full ritual','guide.title':'Guide','guide.desc':'In order, no skipping. If something fails, check the questions at the end first.',
+ 'guide.beforeSmall':'Before you start','guide.beforeH':'Installation',
+ 'g1.t':'Open in Safari','g1.d':'Everything is done in <b>Safari</b> on the iPhone. OTA links do not fire from Instagram, TikTok, Facebook or Chrome.',
+ 'g2.t':'Install the ZetaSing profile','g2.d':'Go to <a href="#/dns">DNS</a> and follow the steps. It is required and done only once.',
+ 'g3.t':'Pick a seal','g3.d':'Open <a href="#/esign">ESign</a> or <a href="#/ksign">KSign</a> and tap "Install".',
+ 'g4.t':'Confirm the dialog','g4.d':'iOS will show "Install?". Tap <code>Install</code> and wait for the icon to appear on the home screen.',
+ 'g5.t':'Trust the profile','g5.d':'<code>Settings → General → VPN &amp; Device Management</code> → tap the company → <code>Trust</code>.',
+ 'g6.t':'Open the app','g6.d':'With DNS active and the profile trusted, the app opens normally. You can now sign your IPAs.',
+ 'guide.note':'<b>If the icon stays grey or says "Waiting":</b> cancel, delete the icon, check the DNS is active and try another seal.',
+ 'guide.signSmall':'App signing','guide.signH':'Using the signer',
+ 'gs1.t':'Load the certificate','gs1.d':'Download a package from <a href="#/certs">Certificates</a> and unzip it in Files.',
+ 'gs2.t':'Import it into the app','gs2.d':'In the certificates section import the <code>.p12</code> and <code>.mobileprovision</code> with its password.',
+ 'gs3.t':'Sign the IPA','gs3.d':'Add the IPA, choose the certificate and sign. When done, install the result.',
+ 'guide.faqSmall':'Asking the seal','guide.faqH':'Frequent questions',
+ 'f1.q':'Nothing happens when I tap "Install"','f1.a':'It is almost always one of two: you are not in Safari, or the DNS profile is missing. Open the page in Safari and try again.',
+ 'f2.q':'"Cannot connect to server"','f2.a':'The DNS is missing or the OTA server is saturated. Install the profile, restart and try another certificate.',
+ 'f3.q':'"Cannot verify the app" when opening it','f3.a':'You skipped trusting it: <code>Settings → General → VPN &amp; Device Management → Trust</code>.',
+ 'f4.q':'Is the certificate permanent?','f4.a':'No. Company accounts get revoked without warning when Apple closes them. When that happens, change seal and sign again.',
+ 'f5.q':'What is the profile actually for?','f5.a':'Two things: enabling the encrypted DNS that lets signed apps connect, and putting ZetaSing on your home screen with its icon, like a normal app.',
+ 'f6.q':'Does it work on iPad?','f6.a':'Yes, with iPadOS 14 or later and always from Safari.',
+ 'footer.disc':'<b>Notice:</b> educational content for personal use. Apps, certificates and profiles belong to their owners. Plists are served from khoindvn\'s server. Use at your own risk.',
+ 'modal.t':'Manual install','modal.p':'The install did not launch from this browser. Do it like this:',
+ 'modal.1':'Open this page in <b>Safari</b> on the iPhone.','modal.2':'Press and hold the link below and choose "Copy".',
+ 'modal.3':'Paste it in the address bar and tap "Go".','modal.4':'Confirm the install.','modal.open':'Open anyway',
+ 'toast.copy':'Copied','toast.pw':'Password copied','toast.profile':'Profile generated',
+ 'lang.btn':'ES','lang.aria':'Switch to Spanish','theme.aria':'Toggle dark mode',
+ 't.home':'ZetaSing','t.esign':'ESign — ZetaSing','t.ksign':'KSign — ZetaSing','t.dns':'DNS Profile — ZetaSing','t.certs':'Certificates .zip — ZetaSing','t.guia':'Guide — ZetaSing'
+},
+es:{
+ tick:'<b>ZetaSing</b> &nbsp;·&nbsp; Certificados de empresa vigentes &nbsp;·&nbsp; Instalación OTA directa &nbsp;·&nbsp; Perfil DNS propio &nbsp;·&nbsp; ESign &amp; KSign &nbsp;·&nbsp; Sin PC &nbsp;·&nbsp; <b>El sello está abierto</b> &nbsp;·&nbsp; Certificados de empresa vigentes &nbsp;·&nbsp; Instalación OTA directa &nbsp;·&nbsp;',
+ 'nav.home':'Inicio','nav.dns':'DNS','nav.certs':'Certificados','nav.guide':'Guía',
+ 'hero.eyebrow':'Sello de sangre · OTA',
+ 'hero.sub':'Instala <em>ESign</em> y <em>KSign</em> en tu iPhone con certificados de empresa. Sin PC, sin cables, sin firmas de siete días. <em>El pacto se firma aquí.</em>',
+ 'hero.cta3':'Perfil DNS',
+ 'chip.servers':'Servidores activos','chip.certs':'Certificados vigentes','chip.ios':'Requiere iOS 14+',
+ 'home.doorsSmall':'Tres puertas','home.doorsTitle':'Elige tu camino','home.doorsDesc':'Todo el ritual empieza por el perfil DNS. Después, escoge el firmador.',
+ 'tile.esignDesc':'18 sellos con instalación directa desde el servidor oficial.','tile.ksignDesc':'18 sellos con el mismo flujo directo y perfiles renovados.',
+ 'tile.dnsTitle':'Perfil DNS','tile.dnsDesc':'Configura el DNS y te deja ZetaSing en la pantalla de inicio.','tile.open':'Abrir catálogo','tile.installNow':'Instalar ahora',
+ 'home.note':'<b>Antes de nada:</b> abre ZetaSing en <b>Safari</b> desde el iPhone. Desde Instagram, TikTok o Chrome los enlaces de instalación no se disparan.',
+ 'ritual.small':'El ritual','ritual.title':'Cómo se instala','ritual.desc':'Cuatro pasos, en orden. Saltarse uno es la causa número uno de fallos.','ritual.guide':'Guía completa',
+ 's1.t':'Abre en Safari','s1.d':'Esta página debe verse en Safari del iPhone.',
+ 's2.t':'Instala el perfil','s2.d':'Perfil ZetaSing: DNS y acceso directo con icono.',
+ 's3.t':'Elige un sello','s3.d':'Pulsa «Instalar» en cualquier certificado del catálogo.',
+ 's4.t':'Confía en el perfil','s4.d':'Ajustes → General → VPN y gestión → Confiar.',
+ 'signer.eyebrow':'Firmador · OTA','signer.dl':'Descargar .ipa directo',
+ 'esign.desc':'18 certificados de empresa servidos directamente desde el servidor oficial. Si un sello falla o se revoca, baja y prueba el siguiente.',
+ 'ksign.desc':'18 certificados de empresa servidos directamente desde el servidor oficial. Alternativa estable: si un sello se revoca, cambia al siguiente.',
+ 'warn':'Estás fuera de Safari en iPhone. Los enlaces OTA <b>solo se lanzan desde Safari</b>.',
+ 'bar.seals':'sellos','bar.first':'instala el perfil primero','search.ph':'Buscar empresa…','badge.new':'NUEVO',
+ 'dns.eyebrow':'Paso cero · obligatorio','dns.title':'Perfil DNS',
+ 'dns.desc':'El perfil de ZetaSing configura el DNS del dispositivo y, además, deja ZetaSing en tu pantalla de inicio con su icono, como una app. Se instala una sola vez.',
+ 'panel.t':'Instalar perfil ZetaSing',
+ 'panel.d':'Se genera un archivo <code>.mobileconfig</code> firmado con el nombre de ZetaSing. Contiene el ajuste de DNS y el acceso directo con icono. Tras descargarlo, iOS te pedirá confirmación en Ajustes.',
+ 'panel.btn':'Descargar perfil',
+ 'dns.small':'Instalación','dns.h':'Qué hacer tras descargarlo',
+ 'd1.t':'Ábrelo en Safari','d1.d':'El botón debe pulsarse desde <b>Safari</b> en el iPhone. Aparecerá el aviso «Este sitio intenta descargar un perfil de configuración».',
+ 'd2.t':'Permite la descarga','d2.d':'Pulsa <code>Permitir</code>. El perfil queda descargado, todavía sin instalar.',
+ 'd3.t':'Ve a Ajustes','d3.d':'<code>Ajustes → General → VPN y gestión de dispositivos</code>. Verás «ZetaSing DNS» bajo «Perfil descargado».',
+ 'd4.t':'Instálalo','d4.d':'Pulsa el perfil → <code>Instalar</code> → código → <code>Instalar</code> → <code>Instalar</code> otra vez.',
+ 'd5.t':'Activa el DNS','d5.d':'En la misma pantalla entra en <code>DNS</code> y comprueba que el perfil está activo. Si no aparece, reinicia el iPhone.',
+ 'd6.t':'Comprueba el icono','d6.d':'Al instalar el perfil, ZetaSing aparece en la pantalla de inicio con su emblema. Ábrelo desde ahí para navegar a pantalla completa.',
+ 'dns.warn':'<b>Importante:</b> si quitas el perfil, las apps firmadas dejan de conectar hasta que lo reinstales. No hay que repetirlo entre instalaciones: se queda puesto.',
+ 'dns.tech':'<b>Nota técnica:</b> el perfil resuelve por DNS cifrado (DoH) sobre <code>1.1.1.1</code>, que es lo que mantiene vivos los certificados de empresa cuando Apple los bloquea por DNS normal. El acceso directo se genera con la dirección de esta web, así que si cambias de dominio vuelve a descargarlo.',
+ 'certs.eyebrow':'Firma manual','certs.title':'Certificados .zip',
+ 'certs.desc':'Paquetes con <code>.p12</code> y <code>.mobileprovision</code> para importar dentro de ESign o KSign. Toca la contraseña para copiarla.',
+ 'certs.note':'<b>Ojo:</b> un paquete sirve para firmar apps, no para instalar el firmador. Para el firmador usa los catálogos de <a href="#/esign">ESign</a> o <a href="#/ksign">KSign</a>. El perfil <a href="#/dns">DNS</a> sigue siendo obligatorio.',
+ 'certs.small':'Paquetes','certs.h':'Descargas','certs.useSmall':'Uso','certs.useH':'Cómo se importa un paquete',
+ 'c1.t':'Descarga y descomprime','c1.d':'Baja el <code>.zip</code> y ábrelo en la app Archivos. Descomprime con la propia app de Archivos.',
+ 'c2.t':'Abre el firmador','c2.d':'En ESign o KSign entra en la sección de certificados o «Firma».',
+ 'c3.t':'Importa los archivos','c3.d':'Selecciona el <code>.p12</code> y el <code>.mobileprovision</code> descomprimidos.',
+ 'c4.t':'Introduce la contraseña','c4.d':'La del listado de arriba. Si el paquete no tiene, se deja vacío.',
+ 'c5.t':'Firma tu IPA','c5.d':'Importa el IPA y fírmalo con el certificado ya cargado.',
+ 'note.all':'Todos los certificados','note.nopw':'Sin contraseña','note.ind':'Individual','note.indNew':'Individual · nuevo','note.noPwSpan':'sin contraseña',
+ 'guide.eyebrow':'El ritual completo','guide.title':'Guía','guide.desc':'En orden y sin saltarse nada. Si algo falla, mira primero en las preguntas del final.',
+ 'guide.beforeSmall':'Antes de empezar','guide.beforeH':'Instalación',
+ 'g1.t':'Abre en Safari','g1.d':'Todo se hace en <b>Safari</b> desde el iPhone. Desde Instagram, TikTok, Facebook o Chrome los enlaces OTA no se disparan.',
+ 'g2.t':'Instala el perfil ZetaSing','g2.d':'Ve a <a href="#/dns">DNS</a> y sigue los pasos. Es obligatorio y se hace una sola vez.',
+ 'g3.t':'Elige un sello','g3.d':'Entra en <a href="#/esign">ESign</a> o <a href="#/ksign">KSign</a> y pulsa «Instalar».',
+ 'g4.t':'Confirma el diálogo','g4.d':'iOS mostrará «¿Instalar?». Pulsa <code>Instalar</code> y espera a que el icono aparezca en la pantalla de inicio.',
+ 'g5.t':'Confía en el perfil','g5.d':'<code>Ajustes → General → VPN y gestión de dispositivos</code> → toca la empresa → <code>Confiar</code>.',
+ 'g6.t':'Abre la app','g6.d':'Con el DNS activo y el perfil confiado, la app abre con normalidad. Ya puedes firmar tus IPA.',
+ 'guide.note':'<b>Si el icono queda en gris o con «Esperando»:</b> cancela, borra el icono, comprueba que el DNS está activo y prueba otro sello.',
+ 'guide.signSmall':'Firma de apps','guide.signH':'Usar el firmador',
+ 'gs1.t':'Carga el certificado','gs1.d':'Descarga un paquete de <a href="#/certs">Certificados</a> y descomprímelo en Archivos.',
+ 'gs2.t':'Impórtalo en la app','gs2.d':'En la sección de certificados importa el <code>.p12</code> y el <code>.mobileprovision</code> con su contraseña.',
+ 'gs3.t':'Firma la IPA','gs3.d':'Añade el IPA, elige el certificado y firma. Al terminar, instala el resultado.',
+ 'guide.faqSmall':'Consultas al sello','guide.faqH':'Preguntas frecuentes',
+ 'f1.q':'No pasa nada al pulsar «Instalar»','f1.a':'Casi siempre es una de dos: no estás en Safari, o falta el perfil DNS. Abre la página desde Safari y vuelve a intentarlo.',
+ 'f2.q':'Sale «No se puede conectar con el servidor»','f2.a':'Falta el DNS o el servidor OTA está saturado. Instala el perfil, reinicia y prueba otro certificado.',
+ 'f3.q':'«No se puede verificar la app» al abrirla','f3.a':'Falta el paso de confiar: <code>Ajustes → General → VPN y gestión de dispositivos → Confiar</code>.',
+ 'f4.q':'¿El certificado es permanente?','f4.a':'No. Las cuentas de empresa se revocan sin aviso cuando Apple las cierra. Cuando pase, cambia de sello y vuelve a firmar.',
+ 'f5.q':'¿Para qué sirve el perfil exactamente?','f5.a':'Para dos cosas: activar el DNS cifrado que deja conectar a las apps firmadas, y dejarte ZetaSing en la pantalla de inicio con su icono, como una app normal.',
+ 'f6.q':'¿Funciona en iPad?','f6.a':'Sí, con iPadOS 14 o superior y siempre desde Safari.',
+ 'footer.disc':'<b>Aviso:</b> contenido con fines educativos y de uso personal. Apps, certificados y perfiles pertenecen a sus titulares. Los plists se sirven desde el servidor de khoindvn. Úsalo bajo tu responsabilidad.',
+ 'modal.t':'Instalación manual','modal.p':'La instalación no se ha lanzado desde este navegador. Hazlo así:',
+ 'modal.1':'Abre esta página en <b>Safari</b> del iPhone.','modal.2':'Mantén pulsado el enlace de abajo y elige «Copiar».',
+ 'modal.3':'Pégalo en la barra de direcciones y pulsa «Ir».','modal.4':'Confirma la instalación.','modal.open':'Abrir igual',
+ 'toast.copy':'Copiado','toast.pw':'Contraseña copiada','toast.profile':'Perfil generado',
+ 'lang.btn':'EN','lang.aria':'Cambiar a inglés','theme.aria':'Cambiar modo oscuro',
+ 't.home':'ZetaSing','t.esign':'ESign — ZetaSing','t.ksign':'KSign — ZetaSing','t.dns':'Perfil DNS — ZetaSing','t.certs':'Certificados .zip — ZetaSing','t.guia':'Guía — ZetaSing'
+}};
+const store={
+ get(k,d){try{return localStorage.getItem(k)||d}catch(e){return d}},
+ set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+};
+let LANG = store.get('zs.lang','en')==='es' ? 'es' : 'en';
+const t = k => (I18N[LANG][k] != null ? I18N[LANG][k] : k);
+
 /* ================= ICONO PARA EL PERFIL ================= */
 const EMBLEM_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 <defs>
@@ -480,7 +701,6 @@ const EMBLEM_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512
 <path d="M206 384c0 18-6 34 0 52 6-18 6-34 0-52ZM314 394c0 22-6 40 0 60 6-20 6-38 0-60Z" fill="url(#b)"/>
 </svg>`;
 let ICON_B64 = '';
-
 function svgToB64(){
   return new Promise(res=>{
     const img = new Image();
@@ -512,10 +732,10 @@ async function buildIcon(){
 }
 buildIcon();
 
-/* ================= DATOS (servidor oficial) ================= */
+/* ================= DATOS ================= */
 const PL = 'itms-services://?action=download-manifest&url=https://website.khoindvn.io.vn/plists/';
 const ESIGN = [
- {n:'ESign', s:'Chengdu Railway', u:PL+'mokcjhppidkm.plist', t:'NUEVO'},
+ {n:'ESign', s:'Chengdu Railway', u:PL+'mokcjhppidkm.plist', t:1},
  {n:'ESign', s:'Viet Nam Rubber', u:PL+'dgaefbobaeop.plist'},
  {n:'ESign Viet Nam Rubber V1', s:'Viet Nam Rubber', u:PL+'jajfejcpifon.plist'},
  {n:'ESign Viet Nam Rubber V2', s:'Viet Nam Rubber', u:PL+'ifaidfcbmgna.plist'},
@@ -535,7 +755,7 @@ const ESIGN = [
  {n:'ESign PowerChina V1', s:'PowerChina', u:PL+'hegmnlhdholo.plist'}
 ];
 const KSIGN = [
- {n:'KSign', s:'Chengdu Railway', u:PL+'eamhadkndigc.plist', t:'NUEVO'},
+ {n:'KSign', s:'Chengdu Railway', u:PL+'eamhadkndigc.plist', t:1},
  {n:'KSign', s:'Viet Nam Rubber', u:PL+'idjbbheelkpp.plist'},
  {n:'KSign Viet Nam Rubber V1', s:'Viet Nam Rubber', u:PL+'gachcmkbfgpi.plist'},
  {n:'KSign Viet Nam Rubber V2', s:'Viet Nam Rubber', u:PL+'kjbmlohbihbi.plist'},
@@ -555,55 +775,83 @@ const KSIGN = [
  {n:'KSign PowerChina V1', s:'PowerChina', u:PL+'bbememhbfidk.plist'}
 ];
 const CERTS = [
- {name:'Pack completo WSF', note:'Todos los certificados', pw:'WSF', url:'https://github.com/WSF-Team/WSF/raw/refs/heads/main/portal/resources/certificates.zip'},
- {name:'Solo ESign', note:'Sin contraseña', pw:'', url:'https://khoindvn.io.vn/document/DNS/ESignCert.zip'},
- {name:'China Academy of Railway Sciences', note:'Individual', pw:'', url:'https://bit.ly/4qJORn3'},
- {name:'National Oilwell Varco, Inc', note:'Individual', pw:'', url:'https://bit.ly/3MTcyLe'},
- {name:'Vietnam Airlines JSC', note:'Individual', pw:'mcrham', url:'https://bit.ly/4d9tAiI'},
- {name:'XL AXIATA, PT TBK', note:'Individual', pw:'AppleP12.com', url:'https://bit.ly/4bDxorA'},
- {name:'Beijing Zhizhangyi Inc', note:'Individual', pw:'AppleP12.com', url:'https://bit.ly/4vF13IQ'},
- {name:'Aramco Services Company', note:'Individual', pw:'AppleP12.com', url:'https://bit.ly/4tkZm0z'},
- {name:'Qingdao', note:'Individual · nuevo', pw:'david', url:'https://bit.ly/4wxuXyt'}
+ {name:'Pack completo WSF', note:'note.all', pw:'WSF', url:'https://github.com/WSF-Team/WSF/raw/refs/heads/main/portal/resources/certificates.zip'},
+ {name:'Solo ESign', note:'note.nopw', pw:'', url:'https://khoindvn.io.vn/document/DNS/ESignCert.zip'},
+ {name:'China Academy of Railway Sciences', note:'note.ind', pw:'', url:'https://bit.ly/4qJORn3'},
+ {name:'National Oilwell Varco, Inc', note:'note.ind', pw:'', url:'https://bit.ly/3MTcyLe'},
+ {name:'Vietnam Airlines JSC', note:'note.ind', pw:'mcrham', url:'https://bit.ly/4d9tAiI'},
+ {name:'XL AXIATA, PT TBK', note:'note.ind', pw:'AppleP12.com', url:'https://bit.ly/4bDxorA'},
+ {name:'Beijing Zhizhangyi Inc', note:'note.ind', pw:'AppleP12.com', url:'https://bit.ly/4vF13IQ'},
+ {name:'Aramco Services Company', note:'note.ind', pw:'AppleP12.com', url:'https://bit.ly/4tkZm0z'},
+ {name:'Qingdao', note:'note.indNew', pw:'david', url:'https://bit.ly/4wxuXyt'}
 ];
-const TITLES={home:'ZetaSing',esign:'ESign — ZetaSing',ksign:'KSign — ZetaSing',dns:'Perfil DNS — ZetaSing',certs:'Certificados .zip — ZetaSing',guia:'Guía — ZetaSing'};
 const $=s=>document.querySelector(s);
 const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 const isSafari=isIOS&&/^((?!CriOS|FxiOS|EdgiOS|OPiOS|Mercury|GSA).)*Safari/i.test(navigator.userAgent);
-const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),1700)};
-function copy(v,msg){const d=()=>toast(msg||'Copiado');
+const toast=m=>{const el=$('#toast');el.textContent=m;el.classList.add('on');clearTimeout(el._h);el._h=setTimeout(()=>el.classList.remove('on'),1700)};
+function copy(v,msg){const d=()=>toast(msg||t('toast.copy'));
  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(v).then(d).catch(fb)}else fb();
- function fb(){const a=document.createElement('textarea');a.value=v;a.style.position='fixed';a.style.opacity=0;document.body.appendChild(a);a.select();try{document.execCommand('copy');d()}catch(e){toast('Copia manual')}a.remove()}}
+ function fb(){const a=document.createElement('textarea');a.value=v;a.style.position='fixed';a.style.opacity=0;document.body.appendChild(a);a.select();try{document.execCommand('copy');d()}catch(e){toast('…')}a.remove()}}
 const IC_DL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 20h16"/></svg>';
 
 function card(d,img){
   return `<article class="card" data-k="${(d.n+' '+d.s).toLowerCase()}">
-  <div class="thumb"><img class="emb" src="/img/${img}" alt="${d.n}" width="64" height="64" loading="lazy" decoding="async">${d.t?`<span class="badge new">${d.t}</span>`:''}</div>
+  <div class="thumb"><img class="emb" src="/img/${img}" alt="${d.n}" width="64" height="64" loading="lazy" decoding="async">${d.t?`<span class="badge new">${t('badge.new')}</span>`:''}</div>
   <div class="body"><b>${d.n}</b><span>${d.s}</span>
-  <div class="row"><button class="install" data-url="${d.u}">${IC_DL}Instalar</button></div></div></article>`;
+  <div class="row"><button class="install" data-url="${d.u}">${IC_DL}${t('card.install')}</button></div></div></article>`;
 }
-$('#gridE').innerHTML=ESIGN.map(d=>card(d,'esign.png')).join('');
-$('#gridK').innerHTML=KSIGN.map(d=>card(d, 'ksign.png')).join('');
-$('#nE').textContent=ESIGN.length; $('#nK').textContent=KSIGN.length;
-$('#rows').innerHTML=CERTS.map(c=>`<div class="rowitem">
- <div class="n"><b>${c.name}</b><span>${c.note} · .zip</span></div>
- ${c.pw?`<button class="pw" data-pw="${c.pw}">${c.pw}</button>`:`<span class="pw" style="opacity:.5;cursor:default">sin contraseña</span>`}
- <a class="dl" href="${c.url}" target="_blank" rel="noopener" aria-label="Descargar">${IC_DL}</a></div>`).join('');
+function renderGrids(){
+  $('#gridE').innerHTML=ESIGN.map(d=>card(d,'esign.png')).join('');
+  $('#gridK').innerHTML=KSIGN.map(d=>card(d,'ksign.png')).join('');
+  $('#nE').textContent=ESIGN.length; $('#nK').textContent=KSIGN.length;
+}
+function renderCerts(){
+  $('#rows').innerHTML=CERTS.map(c=>`<div class="rowitem">
+   <div class="n"><b>${c.name}</b><span>${t(c.note)} · .zip</span></div>
+   ${c.pw?`<button class="pw" data-pw="${c.pw}">${c.pw}</button>`:`<span class="pw" style="opacity:.5;cursor:default">${t('note.noPwSpan')}</span>`}
+   <a class="dl" href="${c.url}" target="_blank" rel="noopener" aria-label="Download">${IC_DL}</a></div>`).join('');
+}
 
-function filt(i,g){$(i).addEventListener('input',e=>{const t=e.target.value.toLowerCase();
- document.querySelectorAll(g+' .card').forEach(c=>c.style.display=c.dataset.k.includes(t)?'':'none');});}
-filt('#qE','#gridE'); filt('#qK','#gridK');
+function filt(i,g){$(i).addEventListener('input',e=>{const v=e.target.value.toLowerCase();
+ document.querySelectorAll(g+' .card').forEach(c=>c.style.display=c.dataset.k.includes(v)?'':'none');});}
 
+/* ================= IDIOMA: APLICAR ================= */
+function applyLang(){
+  document.documentElement.lang=LANG;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const v=t(el.dataset.i18n); if(v!==el.dataset.i18n) el.innerHTML=v;});
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{el.placeholder=t(el.dataset.i18nPh)});
+  const lb=$('#langBtn');
+  lb.textContent=t('lang.btn');
+  lb.setAttribute('aria-label',t('lang.aria'));
+  $('#themeBtn').setAttribute('aria-label',t('theme.aria'));
+  renderGrids(); renderCerts(); route();
+}
+$('#langBtn').onclick=()=>{
+  LANG = LANG==='en' ? 'es' : 'en';
+  store.set('zs.lang',LANG);
+  applyLang();
+};
+
+/* ================= TEMA ================= */
+$('#themeBtn').onclick=()=>{
+  const next = document.documentElement.dataset.theme==='dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme=next;
+  document.documentElement.style.colorScheme=next==='dark'?'dark':'light';
+  store.set('zs.theme',next);
+};
+
+/* ================= RUTAS ================= */
 function route(){
   const h=(location.hash.replace(/^#\/?/,'')||'home');
   const v=document.querySelector(`[data-view="${h}"]`)||document.querySelector('[data-view="home"]');
   document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x===v));
   document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('current',a.dataset.nav===h));
-  document.title=TITLES[h]||TITLES.home;
+  document.title=t('t.'+(TITLES_KEYS.includes(h)?h:'home'));
   window.scrollTo(0,0);
 }
-window.addEventListener('hashchange',route); route();
+const TITLES_KEYS=['home','esign','ksign','dns','certs','guia'];
 
-/* ================= PERFIL ZETASING ================= */
+/* ================= PERFIL ================= */
 function makeProfile(iconB64){
   const U=()=> 'ZETA-'+Math.random().toString(36).slice(2,10).toUpperCase()+'-'+Date.now().toString(36).toUpperCase();
   const web=(location.href.split('#')[0]||location.href).replace(/&/g,'&amp;');
@@ -619,7 +867,7 @@ function makeProfile(iconB64){
       <key>PayloadUUID</key><string>${U()}</string>
       <key>PayloadVersion</key><integer>1</integer>
       <key>PayloadDisplayName</key><string>ZetaSing DNS</string>
-      <key>PayloadDescription</key><string>Resolución DNS cifrada para los certificados de ZetaSing.</string>
+      <key>PayloadDescription</key><string>Encrypted DNS for ZetaSing certificates.</string>
       <key>PayloadOrganization</key><string>ZetaSing</string>
       <key>DNSSettings</key>
       <dict>
@@ -647,8 +895,8 @@ function makeProfile(iconB64){
   <key>PayloadIdentifier</key><string>io.zetasing.profile</string>
   <key>PayloadUUID</key><string>${U()}</string>
   <key>PayloadVersion</key><integer>1</integer>
-  <key>PayloadDisplayName</key><string>ZetaSing — DNS y acceso</string>
-  <key>PayloadDescription</key><string>Perfil oficial de ZetaSing: activa el DNS y añade el acceso directo con icono.</string>
+  <key>PayloadDisplayName</key><string>ZetaSing — DNS and shortcut</string>
+  <key>PayloadDescription</key><string>Official ZetaSing profile: enables DNS and adds the shortcut with icon.</string>
   <key>PayloadOrganization</key><string>ZetaSing</string>
   <key>PayloadRemovalDisallowed</key><false/>
 </dict>
@@ -663,29 +911,31 @@ $('#dlProfile').addEventListener('click', async () => {
   a.download = 'ZetaSing.mobileconfig';
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(a.href), 8000);
-  toast('Perfil generado');
+  toast(t('toast.profile'));
 });
 
-/* ================= MODAL / INSTALAR ================= */
+/* ================= MODAL ================= */
 const modal=$('#modal');
-function open(u){$('#mUrl').textContent=u;$('#mGo').href=u;modal.classList.add('on')}
+function openModal(u){$('#mUrl').textContent=u;$('#mGo').href=u;modal.classList.add('on')}
 $('#mClose').onclick=()=>modal.classList.remove('on');
 modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('on')});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('on')});
 
 document.addEventListener('click',e=>{
-  const p=e.target.closest('.pw[data-pw]'); if(p){copy(p.dataset.pw,'Contraseña copiada');return}
+  const p=e.target.closest('.pw[data-pw]'); if(p){copy(p.dataset.pw,t('toast.pw'));return}
   const i=e.target.closest('.install[data-url]'); if(!i)return;
   if(isSafari){window.location.href=i.dataset.url;return}
-  e.preventDefault(); open(i.dataset.url);
+  e.preventDefault(); openModal(i.dataset.url);
 });
 
-if(!isSafari){
-  ['#warnBox','#warnBoxK'].forEach(id=>{const el=$(id); if(el) el.classList.add('show')});
-  if(isIOS){$('#warnTxt').innerHTML='Estás en un navegador que no es Safari. Abre la página en <b>Safari</b> para instalar.';$('#warnTxtK').innerHTML=$('#warnTxt').innerHTML}
-}
+if(!isSafari){['#warnBox','#warnBoxK'].forEach(id=>{const el=$(id); if(el) el.classList.add('show')})}
 $('#warnX').onclick=()=>$('#warnBox').classList.remove('show');
 $('#warnXK').onclick=()=>$('#warnBoxK').classList.remove('show');
+
+/* ================= INIT ================= */
+filt('#qE','#gridE'); filt('#qK','#gridK');
+window.addEventListener('hashchange',route);
+applyLang();
 </script>
 </body>
 </html>
