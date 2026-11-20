@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ZetaSing</title>
+<meta name="description" content="ZetaSing: instalación OTA de ESign y KSign con certificados de empresa para iPhone. Sin PC.">
+<meta name="theme-color" content="#050305">
+
+<!-- ====== ICONOS ====== -->
+<link rel="icon" type="image/png" href="icon.png" onerror="this.href=ICO">
+<link rel="apple-touch-icon" sizes="512x512" href="icon.png" onerror="this.href=ICO">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ZetaSing">
+<meta name="mobile-web-app-capable" content="yes">
+
+<!-- ====== OPEN GRAPH (cambia TU-DOMINIO por el tuyo) ====== -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ZetaSing">
+<meta property="og:title" content="ZetaSing">
+<meta property="og:description" content="Instala ESign y KSign en tu iPhone con certificados de empresa. Perfil DNS propio, sin PC.">
+<meta property="og:image" content="https://TU-DOMINIO.com/icon.png">
+<meta property="og:url" content="https://TU-DOMINIO.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ZetaSing">
+<meta name="twitter:description" content="Instala ESign y KSign en tu iPhone con certificados de empresa.">
+<meta name="twitter:image" content="https://TU-DOMINIO.com/icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#050305;--bl:#a8101c;--bh:#e63946;--bone:#f1e8da;--ash:#9b8f87;--dim:#6e645e;--line:rgba(193,18,31,.22);--lh:rgba(230,57,70,.55);--d:'UnifrakturMaguntia',cursive;--h:'Cinzel',serif;--f:'Cormorant Garamond',Georgia,serif;--e:cubic-bezier(.22,.8,.24,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--ink);color:#cdc1b7;font-family:var(--f);font-size:18px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;background-image:radial-gradient(1100px 620px at 50% -10%,rgba(109,0,6,.4),transparent 70%),radial-gradient(800px 500px at 92% 22%,rgba(168,16,28,.1),transparent 65%);background-attachment:fixed}
+::selection{background:var(--bl);color:#fff}
+a{color:inherit;text-decoration:none}
+.grain,.vig{position:fixed;inset:0;pointer-events:none;z-index:900}
+.grain{opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")}
+.vig{background:radial-gradient(120% 90% at 50% 45%,transparent 42%,rgba(3,2,3,.82) 100%)}
+.ticker{position:relative;z-index:60;overflow:hidden;white-space:nowrap;background:linear-gradient(180deg,#2b0004,#0d0002);border-bottom:1px solid var(--line);font-family:var(--h);font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:#e0a3a6;padding:7px 0}
+.ticker span{display:inline-block;padding-left:100%;animation:sl 32s linear infinite}
+@keyframes sl{to{transform:translateX(-100%)}}
+.ticker b{color:var(--bh)}
+.nav{position:sticky;top:0;z-index:80;display:flex;align-items:center;gap:14px;padding:13px 20px;background:rgba(5,3,5,.88);backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;flex:none}
+.sigil{width:30px;height:30px;flex:none;filter:drop-shadow(0 0 9px rgba(230,57,70,.55))}
+.brand b{font-family:var(--d);font-size:26px;color:var(--bone);line-height:1;text-shadow:0 0 22px rgba(168,16,28,.85)}
+.links{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none;font-family:var(--h);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ash);margin-left:auto}
+.links::-webkit-scrollbar{display:none}
+.links a{position:relative;padding:5px 0;white-space:nowrap;transition:color .3s}
+.links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--bh);transition:width .35s var(--e)}
+.links a:hover,.links a.current{color:var(--bone)}
+.links a:hover::after,.links a.current::after{width:100%}
+.view{display:none}
+.view.active{display:block;animation:fade .45s var(--e)}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}}
+.hero{position:relative;text-align:center;padding:70px 20px 120px;isolation:isolate;overflow:hidden}
+.sky{position:absolute;inset:0;width:100%;height:100%;z-index:-2;opacity:.75}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,3,5,.55),rgba(5,3,5,.35) 40%,var(--ink));z-index:-1}
+.drip{position:absolute;left:0;width:100%;height:120px;z-index:2;pointer-events:none}
+.drip-top{top:0}.drip-bottom{bottom:-1px}
+.drip path{fill:#4a0004}
+.drip-top path{fill:url(#bg)}
+.drop{position:absolute;top:92px;width:9px;height:9px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:var(--bl);box-shadow:0 0 12px rgba(168,16,28,.9);z-index:3}
+.drop.a{left:22%;animation:fl 5.2s 1.4s infinite}.drop.b{left:67%;animation:fl 6.6s .6s infinite}.drop.c{left:87%;animation:fl 4.4s 2.6s infinite}
+@keyframes fl{0%{transform:translateY(0) scaleY(.7);opacity:0}12%{opacity:1}70%{transform:translateY(72px) scaleY(1.5);opacity:.9}100%{transform:translateY(140px) scaleY(2.4);opacity:0}}
+.eyebrow{font-family:var(--h);font-size:10.5px;letter-spacing:.5em;text-transform:uppercase;color:var(--bh);display:inline-flex;align-items:center;gap:12px;margin-bottom:16px}
+.eyebrow::before,.eyebrow::after{content:"";width:32px;height:1px;background:linear-gradient(90deg,transparent,var(--bl))}
+.eyebrow::after{background:linear-gradient(90deg,var(--bl),transparent)}
+h1.big{font-family:var(--d);font-size:clamp(56px,13vw,124px);line-height:.9;font-weight:400;letter-spacing:2px;background:linear-gradient(180deg,#fff6ec 6%,#f1e8da 38%,#c9b6a8 62%,#8d1a22 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 6px 30px rgba(109,0,6,.95))}
+.sub{max-width:600px;margin:18px auto 0;color:#c4b7ad;font-size:18.5px}
+.sub em{color:var(--bone);font-style:italic}
+.cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:30px}
+.btn{position:relative;display:inline-flex;align-items:center;gap:9px;cursor:pointer;font-family:var(--h);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;padding:14px 24px;color:var(--bone);background:linear-gradient(180deg,#1a0d10,#0c0608);border:1px solid var(--lh);transition:.35s var(--e);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px)}
+.btn::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--bl),#4d0004);opacity:0;transition:opacity .35s}
+.btn>*{position:relative;z-index:1}
+.btn:hover{color:#fff;border-color:var(--bh);transform:translateY(-2px);box-shadow:0 14px 34px -16px rgba(168,16,28,1)}
+.btn:hover::before{opacity:1}
+.btn.solid{background:linear-gradient(180deg,var(--bl),#430004);border-color:#ff6b70}
+.btn svg{width:14px;height:14px;flex:none}
+.chips{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:24px}
+.chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--h);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ash);border:1px solid rgba(155,143,135,.22);padding:6px 11px;background:rgba(0,0,0,.45)}
+.dot{width:5px;height:5px;border-radius:50%;background:#3ddc84;box-shadow:0 0 8px #3ddc84;animation:pl 2s infinite}
+.dot.am{background:#e8b23a;box-shadow:0 0 8px #e8b23a}
+@keyframes pl{50%{opacity:.28}}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+section.blk{padding:62px 0 6px}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-bottom:15px;margin-bottom:26px;border-bottom:1px solid var(--line)}
+.head h2{font-family:var(--h);font-weight:700;font-size:clamp(21px,4vw,31px);letter-spacing:.06em;color:var(--bone);text-transform:uppercase;line-height:1.1}
+.head h2 small{display:block;font-family:var(--f);font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--bh);font-weight:400;margin-bottom:8px}
+.head p{color:var(--ash);font-size:15.5px;max-width:400px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.tile{position:relative;display:flex;flex-direction:column;padding:22px;background:linear-gradient(160deg,#150b0e,#0a0507);border:1px solid var(--line);transition:.4s var(--e);overflow:hidden}
+.tile:hover{transform:translateY(-5px);border-color:var(--lh);box-shadow:0 22px 46px -24px rgba(168,16,28,.95)}
+.tile .emb{height:96px;width:96px;margin-bottom:16px;filter:drop-shadow(0 6px 18px rgba(109,0,6,.8))}
+.tile h3{font-family:var(--h);font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone);margin-bottom:7px}
+.tile p{font-size:15px;color:var(--ash);margin-bottom:16px}
+.tile .go{margin-top:auto;font-family:var(--h);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--bh);display:flex;align-items:center;gap:8px}
+.tile .go::after{content:"→";transition:transform .3s}
+.tile:hover .go::after{transform:translateX(5px)}
+.tile.dns-t{background:linear-gradient(160deg,rgba(168,16,28,.22),#0a0507)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:13px;counter-reset:s}
+.steps.col{grid-template-columns:1fr}
+.step{position:relative;padding:22px 18px 18px;background:linear-gradient(170deg,#130a0d,#080405);border:1px solid var(--line);counter-increment:s}
+.step::before{content:counter(s,decimal-leading-zero);position:absolute;top:10px;right:13px;font-family:var(--d);font-size:32px;color:rgba(168,16,28,.42);line-height:1}
+.step h4{font-family:var(--h);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--bone);margin-bottom:7px;padding-right:30px}
+.step p{font-size:14.5px;color:var(--ash)}
+.step code{font-family:ui-monospace,monospace;font-size:12.5px;color:#f0a7ab;background:rgba(168,16,28,.14);padding:1px 5px}
+.note{display:flex;gap:14px;padding:20px;background:linear-gradient(90deg,rgba(168,16,28,.16),rgba(168,16,28,.02));border:1px solid var(--lh);border-left:3px solid var(--bh);margin-top:26px}
+.note p{font-size:15.5px;color:#d8c9c0}
+.note b{color:var(--bone)}
+.note.amber{background:linear-gradient(90deg,rgba(232,178,58,.13),rgba(232,178,58,.02));border-color:rgba(232,178,58,.35);border-left-color:#e8b23a}
+.phead{position:relative;display:flex;align-items:center;gap:22px;padding:44px 20px 30px;max-width:1080px;margin:0 auto;overflow:hidden}
+.phead::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 240px at 8% 50%,rgba(168,16,28,.22),transparent 70%);z-index:-1}
+.phead .emb{width:112px;height:112px;flex:none;filter:drop-shadow(0 14px 30px rgba(109,0,6,.9))}
+.phead .k{min-width:0}
+.phead .eyebrow{display:block;margin-bottom:8px}
+.phead .eyebrow::before,.phead .eyebrow::after{display:none}
+.phead h1{font-family:var(--d);font-size:clamp(40px,9vw,72px);line-height:.95;font-weight:400;color:var(--bone);text-shadow:0 0 40px rgba(168,16,28,.6)}
+.phead p{color:var(--ash);font-size:15.5px;max-width:460px;margin-top:8px}
+.phead .cta{justify-content:flex-start;margin-top:16px}
+@media(max-width:560px){.phead{flex-direction:column;text-align:center;gap:14px;padding-top:32px}.phead .emb{width:86px;height:86px}.phead p{margin-inline:auto}.phead .cta{justify-content:center}}
+.bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:22px}
+.bar .cnt{font-family:var(--h);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.bar .cnt b{color:var(--bh)}
+.bar .cnt a{color:#e0918f}
+.search{position:relative;flex:1;min-width:200px;max-width:340px}
+.search input{width:100%;padding:10px 13px 10px 36px;background:rgba(0,0,0,.5);border:1px solid rgba(155,143,135,.2);color:var(--bone);font-family:var(--f);font-size:15.5px;outline:none;transition:.3s}
+.search input:focus{border-color:var(--bh);box-shadow:0 0 0 3px rgba(168,16,28,.16)}
+.search input::placeholder{color:var(--dim)}
+.search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:13px;height:13px;stroke:var(--dim)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:13px;padding-bottom:20px}
+.card{position:relative;display:flex;flex-direction:column;background:linear-gradient(158deg,#150b0e,#0a0507);border:1px solid var(--line);overflow:hidden;transition:transform .4s var(--e),border-color .4s,box-shadow .4s}
+.card:hover{transform:translateY(-5px);border-color:var(--lh);box-shadow:0 22px 46px -24px rgba(168,16,28,.95)}
+.card .thumb{position:relative;height:100px;display:grid;place-items:center;background:radial-gradient(120px 90px at 50% 40%,rgba(168,16,28,.2),#0b0507);overflow:hidden;border-bottom:1px solid var(--line)}
+.card .thumb .emb{height:78px;width:78px;transition:transform .5s var(--e)}
+.card:hover .thumb .emb{transform:scale(1.08) rotate(-2deg)}
+.badge{position:absolute;top:8px;right:8px;font-family:var(--h);font-size:8px;letter-spacing:.14em;text-transform:uppercase;padding:3px 7px;z-index:2}
+.badge.new{color:#ffd7d8;background:rgba(230,57,70,.22);border:1px solid var(--lh);backdrop-filter:blur(4px)}
+.badge.dns{color:#f0d79a;background:rgba(232,178,58,.16);border:1px solid rgba(232,178,58,.45)}
+.card .body{padding:14px;display:flex;flex-direction:column;flex:1}
+.card .body b{font-family:var(--h);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--bone);line-height:1.25}
+.card .body span{font-size:13.5px;color:var(--ash);font-style:italic;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
+.row{display:flex;gap:6px;margin-top:14px}
+.install{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;font-family:var(--h);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;padding:10px;color:var(--bone);background:linear-gradient(180deg,#200f13,#0b0507);border:1px solid var(--line);transition:.3s}
+.install:hover{background:linear-gradient(180deg,var(--bl),#3d0004);border-color:#ff6b70;color:#fff}
+.install svg{width:12px;height:12px}
+.copy{width:38px;flex:none;display:grid;place-items:center;cursor:pointer;color:var(--ash);background:transparent;border:1px solid var(--line);transition:.3s}
+.copy:hover{color:var(--bone);border-color:var(--lh);background:rgba(168,16,28,.14)}
+.copy svg{width:13px;height:13px}
+.empty{grid-column:1/-1;text-align:center;padding:44px;color:var(--dim);font-style:italic;border:1px dashed rgba(155,143,135,.2)}
+.panel{margin-top:6px;padding:26px;background:linear-gradient(115deg,rgba(168,16,28,.17),rgba(10,5,7,.92));border:1px solid var(--lh);border-left:3px solid var(--bh)}
+.panel h3{font-family:var(--h);font-size:13.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone);margin-bottom:8px}
+.panel p{font-size:15.5px;color:#bfb0a6;margin-bottom:16px}
+.panel code{font-family:ui-monospace,monospace;font-size:13px;color:#f0a7ab;background:rgba(168,16,28,.14);padding:1px 5px}
+.acts{display:flex;gap:9px;flex-wrap:wrap}
+.rows{display:flex;flex-direction:column;gap:8px}
+.rowitem{display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(0,0,0,.35);border:1px solid rgba(155,143,135,.14);border-left:2px solid #6d0006;transition:.3s}
+.rowitem:hover{background:rgba(168,16,28,.09);border-left-color:var(--bh);border-color:var(--lh)}
+.rowitem .n{flex:1;min-width:0}
+.rowitem .n b{display:block;font-family:var(--h);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--bone)}
+.rowitem .n span{font-size:13.5px;color:var(--dim);font-style:italic}
+.pw{font-family:ui-monospace,monospace;font-size:11px;color:#f0d79a;background:rgba(232,178,58,.1);border:1px dashed rgba(232,178,58,.4);padding:4px 9px;white-space:nowrap;cursor:pointer;transition:.3s}
+.pw:hover{background:rgba(232,178,58,.22)}
+.dl{width:38px;height:38px;flex:none;display:grid;place-items:center;color:var(--ash);border:1px solid var(--line);transition:.3s}
+.dl:hover{color:#fff;background:linear-gradient(180deg,var(--bl),#3d0004);border-color:#ff6b70}
+.dl svg{width:14px;height:14px}
+@media(max-width:560px){.rowitem{flex-wrap:wrap}.pw{order:3}}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;padding:16px 30px 16px 0;position:relative;font-family:var(--h);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--bone);transition:color .3s}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:4px;top:50%;transform:translateY(-50%);font-size:22px;color:var(--bh);font-family:var(--f)}
+.faq details[open] summary::after{content:"–"}
+.faq summary:hover{color:var(--bh)}
+.faq p{padding:0 0 18px;color:var(--ash);font-size:16px;max-width:740px}
+.warn{max-width:1080px;margin:0 auto;padding:0 20px}
+.warn-box{display:none;gap:13px;align-items:flex-start;margin-top:16px;padding:15px 17px;background:linear-gradient(90deg,rgba(168,16,28,.16),rgba(168,16,28,.02));border:1px solid var(--lh);border-left:3px solid var(--bh)}
+.warn-box.show{display:flex}
+.warn-box p{font-size:15.5px;color:#d8c9c0}
+.warn-box b{color:var(--bone)}
+.warn-x{margin-left:auto;background:none;border:0;color:var(--ash);font-size:19px;cursor:pointer;line-height:1}
+footer{margin-top:70px;padding:46px 20px 36px;border-top:1px solid var(--line);background:linear-gradient(180deg,rgba(60,0,4,.34),transparent);text-align:center}
+.fb{font-family:var(--d);font-size:32px;color:var(--bone);text-shadow:0 0 26px rgba(168,16,28,.7)}
+.fl{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:16px 0 20px;font-family:var(--h);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ash)}
+.fl a:hover{color:var(--bh)}
+.disc{font-size:13.5px;color:var(--dim);max-width:700px;margin:0 auto;line-height:1.7}
+.disc b{color:var(--ash)}
+.modal{position:fixed;inset:0;z-index:1000;display:none;place-items:center;padding:20px;background:rgba(2,1,2,.86);backdrop-filter:blur(7px)}
+.modal.on{display:grid}
+.sheet{width:min(460px,100%);background:linear-gradient(165deg,#160b0e,#080405);border:1px solid var(--lh);padding:26px;position:relative;box-shadow:0 40px 90px -30px #000;animation:pop .35s var(--e)}
+@keyframes pop{from{transform:translateY(14px) scale(.97);opacity:0}}
+.sheet h3{font-family:var(--h);font-size:14px;letter-spacing:.15em;text-transform:uppercase;color:var(--bone);margin-bottom:11px;padding-right:30px}
+.sheet p{font-size:15.5px;color:var(--ash);margin-bottom:9px}
+.sheet ol{margin:0 0 14px 18px;color:var(--ash);font-size:15px}
+.sheet ol li{margin-bottom:6px}
+.mono{font-family:ui-monospace,monospace;font-size:10.5px;color:#e0918f;word-break:break-all;background:rgba(0,0,0,.55);border:1px solid var(--line);padding:9px;margin-bottom:13px;max-height:100px;overflow:auto}
+.close{position:absolute;top:13px;right:13px;width:27px;height:27px;display:grid;place-items:center;background:transparent;border:1px solid var(--line);color:var(--ash);cursor:pointer}
+.close:hover{color:var(--bone);border-color:var(--lh)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,90px);z-index:1100;background:linear-gradient(180deg,var(--bl),#3c0004);color:#fff;padding:11px 20px;font-family:var(--h);font-size:10px;letter-spacing:.2em;text-transform:uppercase;border:1px solid #ff6b70;opacity:0;transition:.4s var(--e);pointer-events:none}
+.toast.on{transform:translate(-50%,0);opacity:1}
+@media(max-width:560px){.links{gap:13px;font-size:9.5px;letter-spacing:.12em}.brand b{font-size:22px}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+:focus-visible{outline:2px solid var(--bh);outline-offset:3px}
+</style>
+</head>
+<body>
+<div class="grain"></div><div class="vig"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="iron" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3a3e"/><stop offset=".5" stop-color="#17171a"/><stop offset="1" stop-color="#0a0a0c"/></linearGradient>
+    <linearGradient id="bloody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6b70"/><stop offset=".55" stop-color="#a8101c"/><stop offset="1" stop-color="#4d0004"/></linearGradient>
+    <linearGradient id="bone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffaf2"/><stop offset="1" stop-color="#c9bcae"/></linearGradient>
+
+    <symbol id="em-esign" viewBox="0 0 64 74">
+      <path d="M32 2 61 11v23c0 17-12 26-29 32C15 60 3 51 3 34V11Z" fill="url(#iron)" stroke="#6b1116" stroke-width="1.6"/>
+      <path d="M32 7 56 15v19c0 14-10 22-24 27C18 56 8 48 8 34V15Z" fill="none" stroke="rgba(255,255,255,.13)" stroke-width="1"/>
+      <g stroke="#120407" stroke-width="1.1" fill="none">
+        <path d="M22 55c6-14 9-24 11-33" stroke="url(#bone)" stroke-width="2.6" stroke-linecap="round"/>
+        <path d="M22 55c-3-4-4-9-3-13 2 3 4 4 6 4" stroke="url(#bone)" stroke-width="1.6"/>
+      </g>
+      <g>
+        <path d="M44 52 37 23l-2 1 7 29Z" fill="url(#bone)"/>
+        <path d="M33 22h12l-1 3H34Z" fill="url(#bloody)"/>
+        <path d="M40 55l-3 5-3-5Z" fill="url(#bloody)"/>
+      </g>
+      <path d="M26 57c0 3-1 6 0 9 1-3 1-6 1-9ZM41 59c0 4-1 7 0 11 1-4 1-7 0-11ZM33 60c0 3 0 5 1 7 0-2 0-4-1-7Z" fill="url(#bloody)"/>
+    </symbol>
+
+    <symbol id="em-ksign" viewBox="0 0 64 74">
+      <path d="M32 2 61 11v23c0 17-12 26-29 32C15 60 3 51 3 34V11Z" fill="url(#iron)" stroke="#6b1116" stroke-width="1.6"/>
+      <path d="M32 7 56 15v19c0 14-10 22-24 27C18 56 8 48 8 34V15Z" fill="none" stroke="rgba(255,255,255,.13)" stroke-width="1"/>
+      <g>
+        <path d="M32 16c-7 0-12 5-12 12 0 4 2 7 4 9v5c0 2 2 3 4 3h8c2 0 4-1 4-3v-5c2-2 4-5 4-9 0-7-5-12-12-12Z" fill="url(#bone)"/>
+        <ellipse cx="27" cy="27" rx="3.4" ry="4" fill="#120407"/>
+        <ellipse cx="37" cy="27" rx="3.4" ry="4" fill="#120407"/>
+        <path d="M32 32l-2 4h4Z" fill="#120407"/>
+        <path d="M27 40v3M32 40v4M37 40v3" stroke="#120407" stroke-width="1.6"/>
+      </g>
+      <g stroke="url(#bloody)" stroke-width="1.9" fill="none" stroke-linecap="round">
+        <circle cx="46" cy="46" r="4"/>
+        <path d="M46 50v14M46 58h4M46 62h3"/>
+      </g>
+      <path d="M20 44c0 4-1 7 0 11 1-4 1-7 0-11ZM44 64c0 3-1 5 0 8 1-3 1-5 0-8Z" fill="url(#bloody)"/>
+    </symbol>
+
+    <symbol id="sigil" viewBox="0 0 32 32">
+      <path d="M16 1 30 16 16 31 2 16Z" fill="none" stroke="url(#bloody)" stroke-width="1.4"/>
+      <path d="M16 7 24 16 16 25 8 16Z" fill="url(#bloody)" opacity=".9"/>
+      <path d="M16 11.5v9M12.5 16h7" stroke="#120407" stroke-width="1.3"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="ticker"><span><b>ZetaSing</b> &nbsp;·&nbsp; Certificados de empresa vigentes &nbsp;·&nbsp; Instalación OTA directa &nbsp;·&nbsp; Perfil DNS propio &nbsp;·&nbsp; ESign &amp; KSign &nbsp;·&nbsp; Sin PC &nbsp;·&nbsp; <b>El sello está abierto</b> &nbsp;·&nbsp; Certificados de empresa vigentes &nbsp;·&nbsp; Instalación OTA directa &nbsp;·&nbsp;</span></div>
+
+<nav class="nav">
+  <a class="brand" href="#/" data-nav="home"><svg class="sigil"><use href="#sigil"/></svg><b>ZetaSing</b></a>
+  <div class="links">
+    <a href="#/" data-nav="home">Inicio</a>
+    <a href="#/esign" data-nav="esign">ESign</a>
+    <a href="#/ksign" data-nav="ksign">KSign</a>
+    <a href="#/dns" data-nav="dns">DNS</a>
+    <a href="#/certs" data-nav="certs">Certificados</a>
+    <a href="#/guia" data-nav="guia">Guía</a>
+  </div>
+</nav>
+
+<main>
+  <div class="view" data-view="home">
+    <header class="hero">
+      <svg class="sky" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <defs><radialGradient id="moon"><stop offset="0" stop-color="#ff8a8e"/><stop offset=".45" stop-color="#b3121c"/><stop offset="1" stop-color="#4a0004"/></radialGradient></defs>
+        <circle cx="600" cy="170" r="128" fill="url(#moon)" opacity=".55"/>
+        <circle cx="600" cy="170" r="128" fill="none" stroke="rgba(255,140,145,.28)" stroke-width="1.5"/>
+        <g fill="#080305">
+          <path d="M540 420V250h120v170Z"/><path d="M600 96 660 250H540Z"/><path d="M590 60h20v40h-20Z"/>
+          <path d="M470 420V290h70v130Z"/><path d="M505 230 540 290H470Z"/>
+          <path d="M660 420V290h70v130Z"/><path d="M695 230 730 290H660Z"/>
+          <path d="M370 420V320h60v100Z"/><path d="M400 268 430 320H370Z"/>
+          <path d="M770 420V320h60v100Z"/><path d="M800 268 830 320H770Z"/>
+          <path d="M0 420V356h1200v64Z"/><path d="M250 420v-60h50v60ZM900 420v-60h50v60Z"/>
+        </g>
+        <g fill="#050203" opacity=".9"><path d="M120 120l6 10 6-10-6 4Z"/><path d="M1080 96l5 9 5-9-5 3Z"/><path d="M980 170l4 7 4-7-4 2Z"/></g>
+      </svg>
+      <svg class="drip drip-top" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5d0005"/><stop offset="1" stop-color="#8f0812"/></linearGradient></defs><path d="M0,0 L0,50 C0,68 5,100 13,100 C21,100 24,68 24,50 L58,50 C58,60 64,112 74,112 C84,112 86,60 86,50 L120,50 C120,72 128,94 136,94 C144,94 146,72 146,50 L196,50 C196,58 202,120 212,120 C222,120 224,58 224,50 L268,50 C268,66 274,90 282,90 C290,90 292,66 292,50 L344,50 C344,60 350,108 360,108 C370,108 372,60 372,50 L418,50 C418,74 426,100 434,100 C442,100 444,74 444,50 L498,50 C498,58 504,118 514,118 C524,118 526,58 526,50 L572,50 C572,64 578,86 586,86 C594,86 596,64 596,50 L646,50 C646,72 654,112 662,112 C670,112 672,72 672,50 L722,50 C722,58 728,98 738,98 C748,98 750,58 750,50 L802,50 C802,68 808,92 816,92 C824,92 826,68 826,50 L878,50 C878,60 884,116 894,116 C904,116 906,60 906,50 L952,50 C952,76 960,102 968,102 C976,102 978,76 978,50 L1028,50 C1028,58 1034,120 1044,120 C1054,120 1056,58 1056,50 L1102,50 C1102,66 1108,88 1116,88 C1124,88 1126,66 1126,50 L1176,50 C1176,60 1182,110 1192,110 C1202,110 1204,60 1204,50 L1252,50 C1252,72 1260,96 1268,96 C1276,96 1278,72 1278,50 L1326,50 C1326,58 1332,124 1342,124 C1352,124 1354,58 1354,50 L1402,50 C1402,66 1408,90 1416,90 C1424,90 1426,66 1426,50 L1440,50 L1440,0 Z"/></svg>
+      <div class="drop a"></div><div class="drop b"></div><div class="drop c"></div>
+      <div class="eyebrow">Sello de sangre · OTA</div>
+      <h1 class="big">ZetaSing</h1>
+      <p class="sub">Instala <em>ESign</em> y <em>KSign</em> en tu iPhone con certificados de empresa. Sin PC, sin cables, sin firmas de siete días. <em>El pacto se firma aquí.</em></p>
+      <div class="cta">
+        <a class="btn solid" href="#/esign"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0 0 5-5m-5 5-5-5M4 21h16"/></svg><span>ESign</span></a>
+        <a class="btn" href="#/ksign"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0 0 5-5m-5 5-5-5M4 21h16"/></svg><span>KSign</span></a>
+        <a class="btn" href="#/dns"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18"/></svg><span>Perfil DNS</span></a>
+      </div>
+      <div class="chips"><span class="chip"><i class="dot"></i>Servidores activos</span><span class="chip"><i class="dot"></i>Certificados vigentes</span><span class="chip"><i class="dot am"></i>Requiere iOS 14+</span></div>
+      <svg class="drip drip-bottom" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0,0 L0,50 C0,68 5,100 13,100 C21,100 24,68 24,50 L58,50 C58,60 64,112 74,112 C84,112 86,60 86,50 L120,50 C120,72 128,94 136,94 C144,94 146,72 146,50 L196,50 C196,58 202,120 212,120 C222,120 224,58 224,50 L268,50 C268,66 274,90 282,90 C290,90 292,66 292,50 L344,50 C344,60 350,108 360,108 C370,108 372,60 372,50 L418,50 C418,74 426,100 434,100 C442,100 444,74 444,50 L498,50 C498,58 504,118 514,118 C524,118 526,58 526,50 L572,50 C572,64 578,86 586,86 C594,86 596,64 596,50 L646,50 C646,72 654,112 662,112 C670,112 672,72 672,50 L722,50 C722,58 728,98 738,98 C748,98 750,58 750,50 L802,50 C802,68 808,92 816,92 C824,92 826,68 826,50 L878,50 C878,60 884,116 894,116 C904,116 906,60 906,50 L952,50 C952,76 960,102 968,102 C976,102 978,76 978,50 L1028,50 C1028,58 1034,120 1044,120 C1054,120 1056,58 1056,50 L1102,50 C1102,66 1108,88 1116,88 C1124,88 1126,66 1126,50 L1176,50 C1176,60 1182,110 1192,110 C1202,110 1204,60 1204,50 L1252,50 C1252,72 1260,96 1268,96 C1276,96 1278,72 1278,50 L1326,50 C1326,58 1332,124 1342,124 C1352,124 1354,58 1354,50 L1402,50 C1402,66 1408,90 1416,90 C1424,90 1426,66 1426,50 L1440,50 L1440,0 Z"/></svg>
+    </header>
+
+    <div class="wrap">
+      <section class="blk">
+        <div class="head"><h2><small>Tres puertas</small>Elige tu camino</h2><p>Todo el ritual empieza por el perfil DNS. Después, escoge el firmador.</p></div>
+        <div class="tiles">
+          <a class="tile" href="#/esign"><svg class="emb"><use href="#em-esign"/></svg><h3>ESign</h3><p>18 sellos con instalación directa desde el servidor oficial.</p><span class="go">Abrir catálogo</span></a>
+          <a class="tile" href="#/ksign"><svg class="emb"><use href="#em-ksign"/></svg><h3>KSign</h3><p>18 sellos con el mismo flujo directo y perfiles renovados.</p><span class="go">Abrir catálogo</span></a>
+          <a class="tile dns-t" href="#/dns"><svg class="emb" style="filter:hue-rotate(-18deg)"><use href="#em-esign"/></svg><h3>Perfil DNS</h3><p>Configura el DNS y te deja ZetaSing en la pantalla de inicio.</p><span class="go">Instalar ahora</span></a>
+        </div>
+        <div class="note"><p><b>Antes de nada:</b> abre ZetaSing en <b>Safari</b> desde el iPhone. Desde Instagram, TikTok o Chrome los enlaces de instalación no se disparan.</p></div>
+      </section>
+
+      <section class="blk">
+        <div class="head"><h2><small>El ritual</small>Cómo se instala</h2><p>Cuatro pasos, en orden. Saltarse uno es la causa número uno de fallos.</p></div>
+        <div class="steps">
+          <div class="step"><h4>Abre en Safari</h4><p>Esta página debe verse en Safari del iPhone.</p></div>
+          <div class="step"><h4>Instala el perfil</h4><p>Perfil ZetaSing: DNS y acceso directo con icono.</p></div>
+          <div class="step"><h4>Elige un sello</h4><p>Pulsa «Instalar» en cualquier certificado del catálogo.</p></div>
+          <div class="step"><h4>Confía en el perfil</h4><p>Ajustes → General → VPN y gestión → Confiar.</p></div>
+        </div>
+        <div class="cta" style="margin-top:26px"><a class="btn" href="#/guia"><span>Guía completa</span></a></div>
+      </section>
+    </div>
+  </div>
+
+  <div class="view" data-view="esign">
+    <header class="phead">
+      <svg class="emb"><use href="#em-esign"/></svg>
+      <div class="k"><span class="eyebrow">Firmador · OTA</span><h1>ESign</h1>
+      <p>18 certificados de empresa servidos directamente desde el servidor oficial. Si un sello falla o se revoca, baja y prueba el siguiente.</p>
+      <div class="cta">
+        <a class="btn" href="https://github.com/khoindvn/khoindvn.github.io/releases/download/ipa/ESign.ipa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 20h16"/></svg><span>Descargar .ipa directo</span></a>
+        <button class="btn" data-copyipa="https://github.com/khoindvn/khoindvn.github.io/releases/download/ipa/ESign.ipa"><span>Copiar enlace .ipa</span></button>
+      </div></div>
+    </header>
+    <div class="warn"><div class="warn-box" id="warnBox"><p id="warnTxt">Estás fuera de Safari en iPhone. Los enlaces OTA <b>solo se lanzan desde Safari</b>.</p><button class="warn-x" id="warnX" aria-label="Cerrar">&times;</button></div></div>
+    <div class="wrap">
+      <div class="bar"><div class="cnt"><b id="nE">0</b> sellos · <a href="#/dns">instala el perfil primero</a></div>
+      <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="qE" type="search" placeholder="Buscar empresa…" aria-label="Buscar"></div></div>
+      <div class="grid" id="gridE"></div>
+    </div>
+  </div>
+
+  <div class="view" data-view="ksign">
+    <header class="phead">
+      <svg class="emb"><use href="#em-ksign"/></svg>
+      <div class="k"><span class="eyebrow">Firmador · OTA</span><h1>KSign</h1>
+      <p>18 certificados de empresa servidos directamente desde el servidor oficial. Alternativa estable: si un sello se revoca, cambia al siguiente.</p>
+      <div class="cta">
+        <a class="btn" href="https://github.com/khoindvn/khoindvn.github.io/releases/download/ipa/KSign.ipa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 20h16"/></svg><span>Descargar .ipa directo</span></a>
+        <button class="btn" data-copyipa="https://github.com/khoindvn/khoindvn.github.io/releases/download/ipa/KSign.ipa"><span>Copiar enlace .ipa</span></button>
+      </div></div>
+    </header>
+    <div class="warn"><div class="warn-box" id="warnBoxK"><p id="warnTxtK">Estás fuera de Safari en iPhone. Los enlaces OTA <b>solo se lanzan desde Safari</b>.</p><button class="warn-x" id="warnXK" aria-label="Cerrar">&times;</button></div></div>
+    <div class="wrap">
+      <div class="bar"><div class="cnt"><b id="nK">0</b> sellos · <a href="#/dns">instala el perfil primero</a></div>
+      <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="qK" type="search" placeholder="Buscar empresa…" aria-label="Buscar"></div></div>
+      <div class="grid" id="gridK"></div>
+    </div>
+  </div>
+
+  <div class="view" data-view="dns">
+    <header class="phead" style="display:block">
+      <span class="eyebrow">Paso cero · obligatorio</span><h1>Perfil DNS</h1>
+      <p>El perfil de ZetaSing configura el DNS del dispositivo y, además, deja ZetaSing en tu pantalla de inicio con su icono, como una app. Se instala una sola vez.</p>
+    </header>
+    <div class="wrap" style="max-width:820px">
+      <div class="panel">
+        <h3>Instalar perfil ZetaSing</h3>
+        <p>Se genera un archivo <code>.mobileconfig</code> firmado con el nombre de ZetaSing. Contiene el ajuste de DNS y el acceso directo con icono. Tras descargarlo, iOS te pedirá confirmación en Ajustes.</p>
+        <div class="acts">
+          <button class="btn solid" id="dlProfile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0 0 5-5m-5 5-5-5M4 21h16"/></svg><span>Descargar perfil</span></button>
+          <button class="btn" id="cpProfile"><span>Copiar enlace de la web</span></button>
+        </div>
+      </div>
+      <div class="head" style="margin-top:44px"><h2><small>Instalación</small>Qué hacer tras descargarlo</h2></div>
+      <div class="steps col">
+        <div class="step"><h4>Ábrelo en Safari</h4><p>El botón debe pulsarse desde <b>Safari</b> en el iPhone. Aparecerá el aviso «Este sitio intenta descargar un perfil de configuración».</p></div>
+        <div class="step"><h4>Permite la descarga</h4><p>Pulsa <code>Permitir</code>. El perfil queda descargado, todavía sin instalar.</p></div>
+        <div class="step"><h4>Ve a Ajustes</h4><p><code>Ajustes → General → VPN y gestión de dispositivos</code>. Verás «ZetaSing DNS» bajo «Perfil descargado».</p></div>
+        <div class="step"><h4>Instálalo</h4><p>Pulsa el perfil → <code>Instalar</code> → código → <code>Instalar</code> → <code>Instalar</code> otra vez.</p></div>
+        <div class="step"><h4>Activa el DNS</h4><p>En la misma pantalla entra en <code>DNS</code> y comprueba que el perfil está activo. Si no aparece, reinicia el iPhone.</p></div>
+        <div class="step"><h4>Comprueba el icono</h4><p>Al instalar el perfil, ZetaSing aparece en la pantalla de inicio con su emblema. Ábrelo desde ahí para navegar a pantalla completa.</p></div>
+      </div>
+      <div class="note amber"><p><b>Importante:</b> si quitas el perfil, las apps firmadas dejan de conectar hasta que lo reinstales. No hay que repetirlo entre instalaciones: se queda puesto.</p></div>
+      <div class="note"><p><b>Nota técnica:</b> el perfil resuelve por DNS cifrado (DoH) sobre <code>1.1.1.1</code>, que es lo que mantiene vivos los certificados de empresa cuando Apple los bloquea por DNS normal. El acceso directo se genera con la dirección de esta web, así que si cambias de dominio vuelve a descargarlo.</p></div>
+    </div>
+  </div>
+
+  <div class="view" data-view="certs">
+    <header class="phead" style="display:block">
+      <span class="eyebrow">Firma manual</span><h1>Certificados .zip</h1>
+      <p>Paquetes con <code>.p12</code> y <code>.mobileprovision</code> para importar dentro de ESign o KSign. Toca la contraseña para copiarla.</p>
+    </header>
+    <div class="wrap" style="max-width:900px">
+      <div class="note"><p><b>Ojo:</b> un paquete sirve para firmar apps, no para instalar el firmador. Para el firmador usa los catálogos de <a href="#/esign" style="color:#e0918f">ESign</a> o <a href="#/ksign" style="color:#e0918f">KSign</a>. El perfil <a href="#/dns" style="color:#e0918f">DNS</a> sigue siendo obligatorio.</p></div>
+      <div class="head" style="margin-top:40px"><h2><small>Paquetes</small>Descargas</h2></div>
+      <div class="rows" id="rows"></div>
+      <div class="head" style="margin-top:40px"><h2><small>Uso</small>Cómo se importa un paquete</h2></div>
+      <div class="steps col">
+        <div class="step"><h4>Descarga y descomprime</h4><p>Baja el <code>.zip</code> y ábrelo en la app Archivos. Descomprime con la propia app de Archivos.</p></div>
+        <div class="step"><h4>Abre el firmador</h4><p>En ESign o KSign entra en la sección de certificados o «Firma».</p></div>
+        <div class="step"><h4>Importa los archivos</h4><p>Selecciona el <code>.p12</code> y el <code>.mobileprovision</code> descomprimidos.</p></div>
+        <div class="step"><h4>Introduce la contraseña</h4><p>La del listado de arriba. Si el paquete no tiene, se deja vacío.</p></div>
+        <div class="step"><h4>Firma tu IPA</h4><p>Importa el IPA y fírmalo con el certificado ya cargado.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="view" data-view="guia">
+    <header class="phead" style="display:block">
+      <span class="eyebrow">El ritual completo</span><h1>Guía</h1>
+      <p>En orden y sin saltarse nada. Si algo falla, mira primero en las preguntas del final.</p>
+    </header>
+    <div class="wrap" style="max-width:820px">
+      <div class="head"><h2><small>Antes de empezar</small>Instalación</h2></div>
+      <div class="steps col">
+        <div class="step"><h4>Abre en Safari</h4><p>Todo se hace en <b>Safari</b> desde el iPhone. Desde Instagram, TikTok, Facebook o Chrome los enlaces OTA no se disparan.</p></div>
+        <div class="step"><h4>Instala el perfil ZetaSing</h4><p>Ve a <a href="#/dns" style="color:#e0918f">DNS</a> y sigue los pasos. Es obligatorio y se hace una sola vez.</p></div>
+        <div class="step"><h4>Elige un sello</h4><p>Entra en <a href="#/esign" style="color:#e0918f">ESign</a> o <a href="#/ksign" style="color:#e0918f">KSign</a> y pulsa «Instalar».</p></div>
+        <div class="step"><h4>Confirma el diálogo</h4><p>iOS mostrará «¿Instalar?». Pulsa <code>Instalar</code> y espera a que el icono aparezca en la pantalla de inicio.</p></div>
+        <div class="step"><h4>Confía en el perfil</h4><p><code>Ajustes → General → VPN y gestión de dispositivos</code> → toca la empresa → <code>Confiar</code>.</p></div>
+        <div class="step"><h4>Abre la app</h4><p>Con el DNS activo y el perfil confiado, la app abre con normalidad. Ya puedes firmar tus IPA.</p></div>
+      </div>
+      <div class="note"><p><b>Si el icono queda en gris o con «Esperando»:</b> cancela, borra el icono, comprueba que el DNS está activo y prueba otro sello.</p></div>
+
+      <div class="head" style="margin-top:44px"><h2><small>Firma de apps</small>Usar el firmador</h2></div>
+      <div class="steps col">
+        <div class="step"><h4>Carga el certificado</h4><p>Descarga un paquete de <a href="#/certs" style="color:#e0918f">Certificados</a> y descomprímelo en Archivos.</p></div>
+        <div class="step"><h4>Impórtalo en la app</h4><p>En la sección de certificados importa el <code>.p12</code> y el <code>.mobileprovision</code> con su contraseña.</p></div>
+        <div class="step"><h4>Firma la IPA</h4><p>Añade el IPA, elige el certificado y firma. Al terminar, instala el resultado.</p></div>
+      </div>
+
+      <div class="head" style="margin-top:44px"><h2><small>Consultas al sello</small>Preguntas frecuentes</h2></div>
+      <div class="faq">
+        <details><summary>No pasa nada al pulsar «Instalar»</summary><p>Casi siempre es una de dos: no estás en Safari, o falta el perfil DNS. Usa el botón de copiar de la tarjeta y pega el enlace en la barra de direcciones de Safari.</p></details>
+        <details><summary>Sale «No se puede conectar con el servidor»</summary><p>Falta el DNS o el servidor OTA está saturado. Instala el perfil, reinicia y prueba otro certificado.</p></details>
+        <details><summary>«No se puede verificar la app» al abrirla</summary><p>Falta el paso de confiar: <code>Ajustes → General → VPN y gestión de dispositivos → Confiar</code>.</p></details>
+        <details><summary>¿El certificado es permanente?</summary><p>No. Las cuentas de empresa se revocan sin aviso cuando Apple las cierra. Cuando pase, cambia de sello y vuelve a firmar.</p></details>
+        <details><summary>¿Para qué sirve el perfil exactamente?</summary><p>Para dos cosas: activar el DNS cifrado que deja conectar a las apps firmadas, y dejarte ZetaSing en la pantalla de inicio con su icono, como una app normal.</p></details>
+        <details><summary>¿Funciona en iPad?</summary><p>Sí, con iPadOS 14 o superior y siempre desde Safari.</p></details>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="fb">ZetaSing</div>
+  <div class="fl"><a href="#/">Inicio</a><a href="#/esign">ESign</a><a href="#/ksign">KSign</a><a href="#/dns">DNS</a><a href="#/certs">Certificados</a><a href="#/guia">Guía</a></div>
+  <p class="disc"><b>Aviso:</b> contenido con fines educativos y de uso personal. Apps, certificados y perfiles pertenecen a sus titulares. Los plists se sirven desde el servidor de khoindvn. Úsalo bajo tu responsabilidad.</p>
+</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <div class="sheet">
+    <button class="close" id="mClose" aria-label="Cerrar">&times;</button>
+    <h3 id="mTitle">Instalación manual</h3>
+    <p>La instalación no se ha lanzado desde este navegador. Hazlo así:</p>
+    <ol><li>Abre esta página en <b>Safari</b> del iPhone.</li><li>Copia el enlace de abajo.</li><li>Pégalo en la barra de direcciones y pulsa «Ir».</li><li>Confirma la instalación.</li></ol>
+    <div class="mono" id="mUrl"></div>
+    <div class="row"><button class="install" id="mCopy">Copiar enlace</button><a class="install" id="mGo" href="#" style="max-width:110px">Abrir igual</a></div>
+  </div>
+</div>
+<div class="toast" id="toast">Copiado</div>
+
+<script>
+/* ================= ICONO GENERADO ================= */
+const EMBLEM_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<defs>
+ <radialGradient id="g" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#8f0a12"/><stop offset=".55" stop-color="#2a0206"/><stop offset="1" stop-color="#070203"/></radialGradient>
+ <linearGradient id="i" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4a50"/><stop offset=".5" stop-color="#1a1a1e"/><stop offset="1" stop-color="#0a0a0c"/></linearGradient>
+ <linearGradient id="b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8a8e"/><stop offset=".5" stop-color="#a8101c"/><stop offset="1" stop-color="#4d0004"/></linearGradient>
+</defs>
+<rect width="512" height="512" rx="112" fill="url(#g)"/>
+<rect x="10" y="10" width="492" height="492" rx="104" fill="none" stroke="#5a5a60" stroke-width="6" opacity=".5"/>
+<path d="M256 66 418 118v118c0 92-66 148-162 186-96-38-162-94-162-186V118Z" fill="url(#i)" stroke="#7a1218" stroke-width="8"/>
+<path d="M256 92 400 138v100c0 76-54 122-144 158-90-36-144-82-144-158V138Z" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="4"/>
+<g stroke="#fffaf2" stroke-width="14" stroke-linecap="round" fill="none">
+ <path d="M186 372c30-76 46-132 58-186"/>
+ <path d="M186 372c-16-22-22-50-16-72 10 16 22 22 32 22"/>
+</g>
+<g>
+ <path d="M330 356 292 190l-12 6 40 166Z" fill="#f6efe4"/>
+ <path d="M276 184h66l-6 18h-58Z" fill="url(#b)"/>
+ <path d="M312 374l-16 28-16-28Z" fill="url(#b)"/>
+</g>
+<path d="M206 384c0 18-6 34 0 52 6-18 6-34 0-52ZM314 394c0 22-6 40 0 60 6-20 6-38 0-60Z" fill="url(#b)"/>
+</svg>`;
+let ICO = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(EMBLEM_SVG);
+let ICON_B64 = '';
+
+function svgToB64(){
+  return new Promise(res=>{
+    const img = new Image();
+    img.onload = () => {
+      const c = document.createElement('canvas');
+      c.width = c.height = 512;
+      c.getContext('2d').drawImage(img, 0, 0, 512, 512);
+      res(c.toDataURL('image/png').split(',')[1]);
+    };
+    img.onerror = () => res('');
+    img.src = 'data:image/svg+xml;base64,' + btoa(EMBLEM_SVG.replace(/\n/g, ''));
+  });
+}
+async function buildIcon(){
+  let b64 = '';
+  try {
+    const r = await fetch('icon.png', {cache: 'force-cache'});
+    if (r.ok) {
+      const blob = await r.blob();
+      const bmp = await createImageBitmap(blob);
+      const c = document.createElement('canvas');
+      c.width = c.height = 512;
+      c.getContext('2d').drawImage(bmp, 0, 0, 512, 512);
+      b64 = c.toDataURL('image/png').split(',')[1];
+      ICO = c.toDataURL('image/png');
+    }
+  } catch(e) {}
+  if (!b64) b64 = await svgToB64();
+  ICON_B64 = b64;
+  if (b64) {
+    document.querySelectorAll('link[rel*="icon"]').forEach(l => l.href = 'data:image/png;base64,' + b64);
+  }
+}
+buildIcon();
+
+/* ================= DATOS (servidor oficial) ================= */
+const PL = 'itms-services://?action=download-manifest&url=https://website.khoindvn.io.vn/plists/';
+const ESIGN = [
+ {n:'ESign', s:'Chengdu Railway', u:PL+'mokcjhppidkm.plist', t:'NUEVO'},
+ {n:'ESign', s:'Viet Nam Rubber', u:PL+'dgaefbobaeop.plist'},
+ {n:'ESign Viet Nam Rubber V1', s:'Viet Nam Rubber', u:PL+'jajfejcpifon.plist'},
+ {n:'ESign Viet Nam Rubber V2', s:'Viet Nam Rubber', u:PL+'ifaidfcbmgna.plist'},
+ {n:'ESign', s:'RAKUTEN', u:PL+'gcocahddcinl.plist'},
+ {n:'ESign', s:'Vietnam Electricity', u:PL+'fnenfnfigggm.plist'},
+ {n:'ESign', s:'Beihang University', u:PL+'kagnpjhmkmjp.plist'},
+ {n:'ESign', s:'VINWASH', u:PL+'kjjcnffojofo.plist'},
+ {n:'ESign', s:'HSBC Bank', u:PL+'idcpodehdgbm.plist'},
+ {n:'ESign', s:'Jiangsu Simcere', u:PL+'namafilokpoh.plist'},
+ {n:'ESign Jiangsu Simcere V1', s:'Jiangsu Simcere', u:PL+'jgkbnpmnlaed.plist'},
+ {n:'ESign', s:'Moving Increasingly', u:PL+'dgjfclelmbbj.plist'},
+ {n:'ESign Moving Increasingly V1', s:'Moving Increasingly', u:PL+'kpcbaajmkbon.plist'},
+ {n:'ESign', s:'China Telecom', u:PL+'pghpdpcgblmp.plist'},
+ {n:'ESign China Telecom V1', s:'China Telecom', u:PL+'bhpiamjijnip.plist'},
+ {n:'ESign', s:'National Oilwell', u:PL+'kfccjimokhko.plist'},
+ {n:'ESign', s:'PowerChina', u:PL+'eoekkbmccjbc.plist'},
+ {n:'ESign PowerChina V1', s:'PowerChina', u:PL+'hegmnlhdholo.plist'}
+];
+const KSIGN = [
+ {n:'KSign', s:'Chengdu Railway', u:PL+'eamhadkndigc.plist', t:'NUEVO'},
+ {n:'KSign', s:'Viet Nam Rubber', u:PL+'idjbbheelkpp.plist'},
+ {n:'KSign Viet Nam Rubber V1', s:'Viet Nam Rubber', u:PL+'gachcmkbfgpi.plist'},
+ {n:'KSign Viet Nam Rubber V2', s:'Viet Nam Rubber', u:PL+'kjbmlohbihbi.plist'},
+ {n:'KSign', s:'RAKUTEN', u:PL+'dphpgblmlojd.plist'},
+ {n:'KSign', s:'Vietnam Electricity', u:PL+'geadoiiloimh.plist'},
+ {n:'KSign', s:'Beihang University', u:PL+'gdkhlfchmfof.plist'},
+ {n:'KSign', s:'VINWASH', u:PL+'gmkhipcnkilk.plist'},
+ {n:'KSign', s:'HSBC Bank', u:PL+'pbemcddlcpho.plist'},
+ {n:'KSign', s:'Jiangsu Simcere', u:PL+'mlieeiadepah.plist'},
+ {n:'KSign Jiangsu Simcere V1', s:'Jiangsu Simcere', u:PL+'lodjpjcljdpi.plist'},
+ {n:'KSign', s:'Moving Increasingly', u:PL+'imppbfhicihh.plist'},
+ {n:'KSign Moving Increasingly V1', s:'Moving Increasingly', u:PL+'cmedecbjfimo.plist'},
+ {n:'KSign', s:'China Telecom', u:PL+'phcfgoaomgja.plist'},
+ {n:'KSign China Telecom V1', s:'China Telecom', u:PL+'aomjaecngfnl.plist'},
+ {n:'KSign', s:'National Oilwell', u:PL+'mhgbkhplggio.plist'},
+ {n:'KSign', s:'PowerChina', u:PL+'fbnokebbnpco.plist'},
+ {n:'KSign PowerChina V1', s:'PowerChina', u:PL+'bbememhbfidk.plist'}
+];
+const CERTS = [
+ {name:'Pack completo WSF', note:'Todos los certificados', pw:'WSF', url:'https://github.com/WSF-Team/WSF/raw/refs/heads/main/portal/resources/certificates.zip'},
+ {name:'Solo ESign', note:'Sin contraseña', pw:'', url:'https://khoindvn.io.vn/document/DNS/ESignCert.zip'},
+ {name:'China Academy of Railway Sciences', note:'Individual', pw:'', url:'https://bit.ly/4qJORn3'},
+ {name:'National Oilwell Varco, Inc', note:'Individual', pw:'', url:'https://bit.ly/3MTcyLe'},
+ {name:'Vietnam Airlines JSC', note:'Individual', pw:'mcrham', url:'https://bit.ly/4d9tAiI'},
+ {name:'XL AXIATA, PT TBK', note:'Individual', pw:'AppleP12.com', url:'https://bit.ly/4bDxorA'},
+ {name:'Beijing Zhizhangyi Inc', note:'Individual', pw:'AppleP12.com', url:'https://bit.ly/4vF13IQ'},
+ {name:'Aramco Services Company', note:'Individual', pw:'AppleP12.com', url:'https://bit.ly/4tkZm0z'},
+ {name:'Qingdao', note:'Individual · nuevo', pw:'david', url:'https://bit.ly/4wxuXyt'}
+];
+const TITLES={home:'ZetaSing — El sello de sangre',esign:'ESign — ZetaSing',ksign:'KSign — ZetaSing',dns:'Perfil DNS — ZetaSing',certs:'Certificados .zip — ZetaSing',guia:'Guía — ZetaSing'};
+const $=s=>document.querySelector(s);
+const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const isSafari=isIOS&&/^((?!CriOS|FxiOS|EdgiOS|OPiOS|Mercury|GSA).)*Safari/i.test(navigator.userAgent);
+const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),1700)};
+function copy(v,msg){const d=()=>toast(msg||'Copiado');
+ if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(v).then(d).catch(fb)}else fb();
+ function fb(){const a=document.createElement('textarea');a.value=v;a.style.position='fixed';a.style.opacity=0;document.body.appendChild(a);a.select();try{document.execCommand('copy');d()}catch(e){toast('Copia manual')}a.remove()}}
+const IC_DL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 20h16"/></svg>';
+const IC_CP='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>';
+
+function card(d,em){
+  return `<article class="card" data-k="${(d.n+' '+d.s).toLowerCase()}">
+  <div class="thumb"><svg class="emb"><use href="#${em}"/></svg>${d.t?`<span class="badge new">${d.t}</span>`:''}</div>
+  <div class="body"><b>${d.n}</b><span>${d.s}</span>
+  <div class="row"><button class="install" data-url="${d.u}">${IC_DL}Instalar</button>
+  <button class="copy" data-url="${d.u}" aria-label="Copiar">${IC_CP}</button></div></div></article>`;
+}
+$('#gridE').innerHTML=ESIGN.map(d=>card(d,'em-esign')).join('');
+$('#gridK').innerHTML=KSIGN.map(d=>card(d,'em-ksign')).join('');
+$('#nE').textContent=ESIGN.length; $('#nK').textContent=KSIGN.length;
+$('#rows').innerHTML=CERTS.map(c=>`<div class="rowitem">
+ <div class="n"><b>${c.name}</b><span>${c.note} · .zip</span></div>
+ ${c.pw?`<button class="pw" data-pw="${c.pw}">${c.pw}</button>`:`<span class="pw" style="opacity:.5;cursor:default">sin contraseña</span>`}
+ <a class="dl" href="${c.url}" target="_blank" rel="noopener" aria-label="Descargar">${IC_DL}</a></div>`).join('');
+
+function filt(i,g){$(i).addEventListener('input',e=>{const t=e.target.value.toLowerCase();
+ document.querySelectorAll(g+' .card').forEach(c=>c.style.display=c.dataset.k.includes(t)?'':'none');});}
+filt('#qE','#gridE'); filt('#qK','#gridK');
+
+function route(){
+  const h=(location.hash.replace(/^#\/?/,'')||'home');
+  const v=document.querySelector(`[data-view="${h}"]`)||document.querySelector('[data-view="home"]');
+  document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x===v));
+  document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('current',a.dataset.nav===h));
+  document.title=TITLES[h]||TITLES.home;
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',route); route();
+
+/* ================= PERFIL ZETASING ================= */
+function makeProfile(iconB64){
+  const U=()=> 'ZETA-'+Math.random().toString(36).slice(2,10).toUpperCase()+'-'+Date.now().toString(36).toUpperCase();
+  const web=(location.href.split('#')[0]||location.href).replace(/&/g,'&amp;');
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>PayloadType</key><string>com.apple.dnsSettings.managed</string>
+      <key>PayloadIdentifier</key><string>io.zetasing.dns.${U()}</string>
+      <key>PayloadUUID</key><string>${U()}</string>
+      <key>PayloadVersion</key><integer>1</integer>
+      <key>PayloadDisplayName</key><string>ZetaSing DNS</string>
+      <key>PayloadDescription</key><string>Resolución DNS cifrada para los certificados de ZetaSing.</string>
+      <key>PayloadOrganization</key><string>ZetaSing</string>
+      <key>DNSSettings</key>
+      <dict>
+        <key>DNSProtocol</key><string>HTTPS</string>
+        <key>ServerURL</key><string>https://cloudflare-dns.com/dns-query</string>
+        <key>ServerAddresses</key>
+        <array><string>1.1.1.1</string><string>1.0.0.1</string></array>
+      </dict>
+    </dict>
+    <dict>
+      <key>PayloadType</key><string>com.apple.webClip.managed</string>
+      <key>PayloadIdentifier</key><string>io.zetasing.clip.${U()}</string>
+      <key>PayloadUUID</key><string>${U()}</string>
+      <key>PayloadVersion</key><integer>1</integer>
+      <key>PayloadDisplayName</key><string>ZetaSing</string>
+      <key>PayloadOrganization</key><string>ZetaSing</string>
+      <key>Label</key><string>ZetaSing</string>
+      <key>URL</key><string>${web}</string>
+      <key>FullScreen</key><true/>
+      <key>Precomposed</key><true/>
+      <key>IsRemovable</key><true/>
+      ${iconB64?`<key>Icon</key><data>${iconB64}</data>`:''}
+    </dict>
+  </array>
+  <key>PayloadType</key><string>Configuration</string>
+  <key>PayloadIdentifier</key><string>io.zetasing.profile</string>
+  <key>PayloadUUID</key><string>${U()}</string>
+  <key>PayloadVersion</key><integer>1</integer>
+  <key>PayloadDisplayName</key><string>ZetaSing — DNS y acceso</string>
+  <key>PayloadDescription</key><string>Perfil oficial de ZetaSing: activa el DNS y añade el acceso directo con icono.</string>
+  <key>PayloadOrganization</key><string>ZetaSing</string>
+  <key>PayloadRemovalDisallowed</key><false/>
+</dict>
+</plist>`;
+}
+$('#dlProfile').addEventListener('click', async () => {
+  const b64 = ICON_B64 || await svgToB64();
+  const xml = makeProfile(b64);
+  const blob = new Blob([xml], {type:'application/x-apple-aspen-config'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'ZetaSing.mobileconfig';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 8000);
+  toast('Perfil generado');
+});
+$('#cpProfile').onclick=()=>copy(location.href.split('#')[0],'Enlace copiado');
+
+/* ================= MODAL / INSTALAR ================= */
+const modal=$('#modal');
+function open(u){$('#mUrl').textContent=u;$('#mGo').href=u;$('#mCopy').onclick=()=>copy(u);modal.classList.add('on')}
+$('#mClose').onclick=()=>modal.classList.remove('on');
+modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('on')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('on')});
+
+document.addEventListener('click',e=>{
+  const c=e.target.closest('.copy[data-url]'); if(c){copy(c.dataset.url,'Enlace copiado');return}
+  const p=e.target.closest('.pw[data-pw]'); if(p){copy(p.dataset.pw,'Contraseña copiada');return}
+  const ipa=e.target.closest('[data-copyipa]'); if(ipa){copy(ipa.dataset.copyipa,'Enlace .ipa copiado');return}
+  const i=e.target.closest('.install[data-url]'); if(!i)return;
+  if(isSafari){window.location.href=i.dataset.url;return}
+  e.preventDefault(); open(i.dataset.url);
+});
+
+if(!isSafari){
+  ['#warnBox','#warnBoxK'].forEach(id=>{const el=$(id); if(el) el.classList.add('show')});
+  if(isIOS){$('#warnTxt').innerHTML='Estás en un navegador que no es Safari. Copia el enlace y pégalo en <b>Safari</b> para instalar.';$('#warnTxtK').innerHTML=$('#warnTxt').innerHTML}
+}
+$('#warnX').onclick=()=>$('#warnBox').classList.remove('show');
+$('#warnXK').onclick=()=>$('#warnBoxK').classList.remove('show');
+</script>
+</body>
+</html>
