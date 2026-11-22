@@ -16,13 +16,12 @@
 }catch(e){}})();
 </script>
 
-<!-- ====== FAVICON ====== -->
+<!-- ====== ICONOS ====== -->
 <link rel="icon" type="image/png" sizes="32x32" href="/img/icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/img/icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/img/img.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/img/icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preload" as="image" href="/img/icon.png">
-<link rel="preload" as="image" href="/img/img.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="ZetaSing">
@@ -313,7 +312,7 @@ footer{margin-top:64px;padding:44px 20px 34px;border-top:1px solid var(--line);b
 <div class="ticker"><span data-i18n="tick"></span></div>
 
 <nav class="nav">
-  <a class="brand" href="#/" data-nav="home"><img class="sigil" src="/img/img.png" alt="ZetaSing" width="28" height="28" fetchpriority="high" decoding="async"><b>ZetaSing</b></a>
+  <a class="brand" href="#/" data-nav="home"><img class="sigil" src="/img/icon.png" alt="ZetaSing" width="28" height="28" fetchpriority="high" decoding="async"><b>ZetaSing</b></a>
   <div class="links">
     <a href="#/" data-nav="home" data-i18n="nav.home">Home</a>
     <a href="#/esign" data-nav="esign">ESign</a>
@@ -681,7 +680,8 @@ const store={
 let LANG = store.get('zs.lang','en')==='es' ? 'es' : 'en';
 const t = k => (I18N[LANG][k] != null ? I18N[LANG][k] : k);
 
-/* ================= ICONO PARA EL PERFIL ================= */
+/* ================= ICONO PARA EL PERFIL (img.png) ================= */
+const PROFILE_ICON = '/img/img.png';
 const EMBLEM_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 <defs>
  <radialGradient id="g" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#f0573f"/><stop offset=".55" stop-color="#8f1d14"/><stop offset="1" stop-color="#2a0a06"/></radialGradient>
@@ -703,7 +703,6 @@ const EMBLEM_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512
 </g>
 <path d="M206 384c0 18-6 34 0 52 6-18 6-34 0-52ZM314 394c0 22-6 40 0 60 6-20 6-38 0-60Z" fill="url(#b)"/>
 </svg>`;
-const APP_ICON = '/img/img.png';
 let ICON_B64 = '';
 function svgToB64(){
   return new Promise(res=>{
@@ -721,7 +720,7 @@ function svgToB64(){
 async function buildIcon(){
   let b64 = '';
   try {
-    const r = await fetch(APP_ICON, {cache: 'force-cache'});
+    const r = await fetch(PROFILE_ICON, {cache: 'force-cache'});
     if (r.ok) {
       const blob = await r.blob();
       const bmp = await createImageBitmap(blob);
@@ -942,7 +941,6 @@ $('#warnXK').onclick=()=>$('#warnBoxK').classList.remove('show');
 /* ================= INIT ================= */
 filt('#qE','#gridE'); filt('#qK','#gridK');
 window.addEventListener('hashchange',route);
-applyRoute?0:0;
 applyLang();
 </script>
 </body>
